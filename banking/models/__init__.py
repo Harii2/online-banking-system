@@ -1,4 +1,14 @@
-__all__ = []
+from .bank import Bank
+from .account import Account
+from .transaction import Transaction
+from .staff import Staff
+
+__all__ = [
+    "Bank",
+    "Account",
+    "Transaction",
+    "Staff",
+]
 
 # class DummyModel(AbstractDateTimeModel):
 #     """

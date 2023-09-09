@@ -20,6 +20,7 @@ from django_swagger_utils.drf_server.utils.general.import_app_settings import im
 
 THIRD_PARTY_APPS = []
 APPS = [
+    'banking',
 ]
 
 INSTALLED_APPS += THIRD_PARTY_APPS
@@ -55,6 +56,7 @@ SWAGGER_UTILS = {
         }
     },
     "APPS": {
+        'banking' : {}
     },
     "HOST": os.environ.get('APIGATEWAY_ENDPOINT', '127.0.0.1:8000'),
 }
