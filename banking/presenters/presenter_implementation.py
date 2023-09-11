@@ -5,6 +5,13 @@ from typing import Dict
 
 
 class PresenterImplementation(PresenterInterface):
+    def get_account_balance_response(self, balance: int) -> Dict[str, int]:
+        balance_dict = {'balance': balance}
+        return balance_dict
+
+    def raise_invalid_account_id(self, *args, **kwargs):
+        raise BadRequest(*INVALID_ACCOUNT_ID)
+
     def raise_ifsc_code_already_exists(self, *args, **kwargs):
         raise BadRequest(*INVALID_IFSC_CODE)
 

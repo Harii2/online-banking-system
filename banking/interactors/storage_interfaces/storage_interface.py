@@ -4,6 +4,13 @@ from banking.models import Bank, Staff, Account
 
 
 class StorageInterface:
+    @abstractmethod
+    def get_accountant_balance(self, account_id: int):
+        pass
+
+    @abstractmethod
+    def validate_account_id(self, account_id: int):
+        pass
 
     @abstractmethod
     def validate_ifsc_code(self, ifsc_code: str):

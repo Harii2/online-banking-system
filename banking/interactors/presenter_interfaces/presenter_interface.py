@@ -3,6 +3,14 @@ from abc import abstractmethod
 
 class PresenterInterface:
     @abstractmethod
+    def get_account_balance_response(self, balance: int) -> dict:
+        pass
+
+    @abstractmethod
+    def raise_invalid_account_id(self, *args, **kwargs):
+        pass
+
+    @abstractmethod
     def raise_manager_email_already_exists(self, *args, **kwargs):
         pass
 

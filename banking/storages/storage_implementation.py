@@ -5,6 +5,15 @@ from banking.exceptions.custom_exceptions import *
 
 
 class StorageImplementation(StorageInterface):
+    def get_accountant_balance(self, account_id: int) -> int:
+        balance = Account.objects.get(pk=account_id).balance
+        print("Balance in get_account_balance: ", balance)
+        return balance
+
+    def validate_account_id(self, account_id: int) -> None:
+        is_exists = Account.objects.filter(id=account_id).exists()
+        if not is_exists:
+            raise InvalidAccountId
 
     def validate_ifsc_code(self, ifsc_code: str) -> None:
         is_exists = Bank.objects.filter(ifsc_code=ifsc_code).exists()

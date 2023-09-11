@@ -9,6 +9,11 @@ INVALID_IFSC_CODE = (
     'IFSC_code already exists'
 )
 
+INVALID_ACCOUNT_ID = (
+    'Invalid Account Id',
+    'User not exists with that account id'
+)
+
 INVALID_MANAGER_EMAIL = (
     'This email already exists',
     'This Manager already in use'

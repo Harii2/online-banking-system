@@ -15,3 +15,7 @@ class BankNotExists(ObjectDoesNotExist):
 
 class InvalidUserDetails(Exception):
     pass
+
+
+class InvalidAccountId(ObjectDoesNotExist):
+    pass
