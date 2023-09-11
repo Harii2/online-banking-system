@@ -1,6 +1,7 @@
 from abc import abstractmethod
-from dataclasses import dataclass
 from banking.models import Bank, Staff, Account
+from banking.interactors.dtos import CreateBankRequestDTO
+from banking.interactors.dtos import CreateAccountRequestDTO
 
 
 class StorageInterface:
@@ -21,11 +22,11 @@ class StorageInterface:
         pass
 
     @abstractmethod
-    def create_bank(self, bank_name: str, ifsc_code: str, bank_manager_email: str, branch: str):
+    def create_bank(self, create_bank_request_dto: CreateBankRequestDTO) -> int:
         pass
 
     @abstractmethod
-    def create_manager_for_bank(self, bank_id: int, manager_email: str) -> Staff:
+    def create_manager_for_bank(self, bank_id: int, manager_email: str) -> int:
         pass
 
     @abstractmethod
@@ -33,9 +34,9 @@ class StorageInterface:
         pass
 
     @abstractmethod
-    def validate_user_details(self, name: str, age: int, mobile_number: str):
+    def validate_user_details(self, create_account_request_dto: CreateAccountRequestDTO):
         pass
 
     @abstractmethod
-    def create_account(self, bank_id: int, name: str, age: int, mobile_number: str) -> Account:
+    def create_account(self, create_account_request_dto: CreateAccountRequestDTO) -> int :
         pass

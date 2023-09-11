@@ -1,9 +1,21 @@
 from abc import abstractmethod
+from banking.interactors.dtos import CreateBankResponseDTO
 
 
 class PresenterInterface:
     @abstractmethod
     def get_account_balance_response(self, balance: int) -> dict:
+        pass
+
+    @abstractmethod
+    def raise_invalid_user_name(self, *args, **kwargs):
+        pass
+
+    def raise_invalid_mobile_number(self, *args, **kwargs):
+        pass
+
+    @abstractmethod
+    def raise_invalid_age(self, *args, **kwargs):
         pass
 
     @abstractmethod
@@ -31,5 +43,5 @@ class PresenterInterface:
         pass
 
     @abstractmethod
-    def get_create_bank_response(self, bank_id: int, manager_id: int) -> dict:
+    def get_create_bank_response(self, bank_id: int, manager_id: int) -> CreateBankResponseDTO:
         pass

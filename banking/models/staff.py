@@ -13,7 +13,7 @@ class Staff(models.Model):
     mobile_number = models.CharField(max_length=255, null=True)
     joined_at = models.DateTimeField(auto_now_add=True)
     role = models.CharField(max_length=255, choices=ROLES)
-    bank_id = models.ForeignKey(Bank, on_delete=models.CASCADE)
+    bank = models.ForeignKey(Bank, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

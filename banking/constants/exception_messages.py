@@ -9,6 +9,21 @@ INVALID_IFSC_CODE = (
     'IFSC_code already exists'
 )
 
+INVALID_AGE = (
+    'Invalid Age',
+    'Age must be >=8 years'
+)
+
+INVALID_USER_NAME = (
+    'Name is not valid',
+    'Invalid User name'
+)
+
+INVALID_MOBILE_NUMBER = (
+    'Invalid Mobile Number',
+    'Mobile Number must be 10 digit words'
+)
+
 INVALID_ACCOUNT_ID = (
     'Invalid Account Id',
     'User not exists with that account id'

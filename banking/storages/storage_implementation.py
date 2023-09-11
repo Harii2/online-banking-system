@@ -2,6 +2,8 @@ from banking.interactors.storage_interfaces.storage_interface import StorageInte
 from banking.constants.exception_messages import *
 from banking.models import Bank, Staff, Account
 from banking.exceptions.custom_exceptions import *
+from banking.interactors.dtos import CreateBankRequestDTO
+from banking.interactors.dtos import CreateAccountRequestDTO
 
 
 class StorageImplementation(StorageInterface):
@@ -25,7 +27,7 @@ class StorageImplementation(StorageInterface):
         if is_exists:
             raise ManagerEmailAlreadyExists
 
-    def create_manager_for_bank(self, bank_id: int, manager_email: str) -> Staff:
+    def create_manager_for_bank(self, bank_id: int, manager_email: str) -> int:
         manager = Staff.objects.create(
             name=manager_email,
             email=manager_email,
@@ -33,31 +35,44 @@ class StorageImplementation(StorageInterface):
             role="MANAGER",
             bank_id=bank_id
         )
-        return manager
+        return manager.id
 
-    def create_bank(self, bank_name: str, ifsc_code: str, bank_manager_email: str, branch: str):
+    def create_bank(self, create_bank_request_dto: CreateBankRequestDTO) -> int:
+        bank_name = create_bank_request_dto.bank_name
+        ifsc_code = create_bank_request_dto.ifsc_code
+        branch = create_bank_request_dto.branch
         bank = Bank.objects.create(
             name=bank_name,
             ifsc_code=ifsc_code,
             branch=branch
         )
-        return bank
+        return bank.id
 
     def is_valid_bank_id(self, bank_id: int):
         is_exists = Bank.objects.filter(id=bank_id).exists()
         if not is_exists:
             raise BankNotExists
 
-    def validate_user_details(self, name: str, age: int, mobile_number: str):
-        if name.strip() == "" or age == 0 or mobile_number.strip() == "":
-            raise InvalidUserDetails
+    def validate_user_details(self, create_account_request_dto: CreateAccountRequestDTO):
+        name = create_account_request_dto.name
+        age = create_account_request_dto.age
+        mobile_number = create_account_request_dto.mobile_number
+        if name.strip() == "":
+            raise InvalidAccountantName
+        if age < 8:
+            raise InvalidAge
+        if mobile_number.strip() == "" or len(mobile_number) != 10:
+            raise InvalidMobileNumber
 
-    def create_account(self, bank_id: int, name: str, age: int, mobile_number: str) -> Account:
-        bank = Bank.objects.get(pk=bank_id)
+    def create_account(self, create_account_request_dto: CreateAccountRequestDTO) -> int:
+        name = create_account_request_dto.name
+        age = create_account_request_dto.age
+        mobile_number = create_account_request_dto.mobile_number
+        bank_id = create_account_request_dto.bank_id
         account = Account.objects.create(
             name=name,
             age=age,
             mobile_number=mobile_number,
-            bank_id=bank
+            bank_id=bank_id
         )
-        return account
+        return account.id

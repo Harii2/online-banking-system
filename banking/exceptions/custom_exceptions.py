@@ -1,6 +1,18 @@
 from django.core.exceptions import ObjectDoesNotExist
 
 
+class InvalidAge(Exception):
+    pass
+
+
+class InvalidMobileNumber(Exception):
+    pass
+
+
+class InvalidAccountantName(Exception):
+    pass
+
+
 class IFSCCodeAlreadyExists(Exception):
     pass
 

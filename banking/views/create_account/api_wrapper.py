@@ -7,6 +7,7 @@ from .validator_class import ValidatorClass
 from banking.storages.storage_implementation import StorageImplementation
 from banking.presenters.presenter_implementation import PresenterImplementation
 from banking.interactors.create_account_interactor import CreateBankInteractor
+from banking.interactors.dtos import CreateAccountRequestDTO
 
 
 @validate_decorator(validator_class=ValidatorClass)
@@ -19,11 +20,17 @@ def api_wrapper(*args, **kwargs):
     name = request_body['name']
     age = request_body['age']
     mobile_number = request_body['mobile_number']
+    create_account_request_dto = CreateAccountRequestDTO(
+        bank_id=bank_id,
+        name=name,
+        age=age,
+        mobile_number=mobile_number
+    )
 
     storage = StorageImplementation()
     presenter = PresenterImplementation()
     interactor = CreateBankInteractor(storage)
 
-    account_number_dict = interactor.create_account(bank_id, name, age, mobile_number, presenter)
+    account_number_dict = interactor.create_account(create_account_request_dto, presenter)
     response_dict = json.dumps(account_number_dict)
     return HttpResponse(response_dict, status=201)
