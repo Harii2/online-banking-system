@@ -228,7 +228,7 @@
             "in": "path",
             "required": true,
             "description": "bank_name",
-            "type": "string"
+            "type": "integer"
           },
           {
             "name": "type",
