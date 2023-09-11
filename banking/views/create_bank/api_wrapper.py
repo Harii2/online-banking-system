@@ -14,6 +14,7 @@ def api_wrapper(*args, **kwargs):
     request_body = kwargs['request_data']
     bank_name = request_body['bank_name']
     ifsc_code = request_body['ifsc_code']
+    branch = request_body['branch']
     bank_manager_email = request_body['bank_manager_email']
     # branch = request_body['branch']
     storage = StorageImplementation()
@@ -23,7 +24,7 @@ def api_wrapper(*args, **kwargs):
         bank_name=bank_name,
         ifsc_code=ifsc_code,
         bank_manager_email=bank_manager_email,
-        branch="Hyderabad",
+        branch=branch,
         presenter=presenter
     )
     response_data = json.dumps(bank_id_dict)
