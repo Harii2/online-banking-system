@@ -1,6 +1,6 @@
 from banking.interactors.storage_interfaces.storage_interface import StorageInterface
 from banking.constants.exception_messages import *
-from banking.models import Bank, Staff
+from banking.models import Bank, Staff, Account
 from banking.exceptions.custom_exceptions import *
 
 
@@ -33,3 +33,22 @@ class StorageImplementation(StorageInterface):
             branch=branch
         )
         return bank
+
+    def is_valid_bank_id(self, bank_id: int):
+        is_exists = Bank.objects.filter(id=bank_id).exists()
+        if not is_exists:
+            raise BankNotExists
+
+    def validate_user_details(self, name: str, age: int, mobile_number: str):
+        if name.strip() == "" or age == 0 or mobile_number.strip() == "":
+            raise InvalidUserDetails
+
+    def create_account(self, bank_id: int, name: str, age: int, mobile_number: str) -> Account:
+        bank = Bank.objects.get(pk=bank_id)
+        account = Account.objects.create(
+            name=name,
+            age=age,
+            mobile_number=mobile_number,
+            bank_id=bank
+        )
+        return account

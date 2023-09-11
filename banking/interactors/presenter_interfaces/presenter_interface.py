@@ -11,5 +11,17 @@ class PresenterInterface:
         pass
 
     @abstractmethod
+    def raise_bank_not_exists(self, *args, **kwargs):
+        pass
+
+    @abstractmethod
+    def raise_invalid_user_details(self, *args, **kwargs):
+        pass
+
+    @abstractmethod
+    def get_create_account_response(self, account_number: int) -> dict:
+        pass
+
+    @abstractmethod
     def get_create_bank_response(self, bank_id: int, manager_id: int) -> dict:
         pass

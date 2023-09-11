@@ -2,17 +2,16 @@
 
 REQUEST_BODY_JSON = """
 {
-    "username": "string",
-    "password": "string"
+    "name": "string",
+    "age": 1,
+    "mobile_number": "string"
 }
 """
 
 
 RESPONSE_201_JSON = """
 {
-    "account_number": 1,
-    "user_name": "string",
-    "bank_name": "string"
+    "account_number": 1
 }
 """
 

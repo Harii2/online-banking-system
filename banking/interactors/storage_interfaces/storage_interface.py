@@ -1,6 +1,7 @@
 from abc import abstractmethod
 from dataclasses import dataclass
-from banking.models import Bank, Staff
+from banking.models import Bank, Staff, Account
+
 
 class StorageInterface:
 
@@ -18,4 +19,16 @@ class StorageInterface:
 
     @abstractmethod
     def create_manager_for_bank(self, bank_id: int, manager_email: str) -> Staff:
+        pass
+
+    @abstractmethod
+    def is_valid_bank_id(self, bank_id: int):
+        pass
+
+    @abstractmethod
+    def validate_user_details(self, name: str, age: int, mobile_number: str):
+        pass
+
+    @abstractmethod
+    def create_account(self, bank_id: int, name: str, age: int, mobile_number: str) -> Account:
         pass

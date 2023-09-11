@@ -1,29 +1,29 @@
+import json
+from django.http import HttpResponse
+
 from django_swagger_utils.drf_server.utils.decorator.interface_decorator \
     import validate_decorator
 from .validator_class import ValidatorClass
-
+from banking.storages.storage_implementation import StorageImplementation
+from banking.presenters.presenter_implementation import PresenterImplementation
+from banking.interactors.create_bank_interactor import CreateBankInteractor
 
 @validate_decorator(validator_class=ValidatorClass)
 def api_wrapper(*args, **kwargs):
-    # ---------MOCK IMPLEMENTATION---------
+    path_params = kwargs['path_params']
+    request_body = kwargs['request_data']
 
-    try:
-        from banking.views.create_account.tests.test_case_01 \
-            import TEST_CASE as test_case
-    except ImportError:
-        from banking.views.create_account.tests.test_case_01 \
-            import test_case
+    bank_id = path_params['bank_id']
 
-    from django_swagger_utils.drf_server.utils.server_gen.mock_response \
-        import mock_response
-    try:
-        from banking.views.create_account.request_response_mocks \
-            import RESPONSE_200_JSON
-    except ImportError:
-        RESPONSE_200_JSON = ''
-    response_tuple = mock_response(
-        app_name="banking", test_case=test_case,
-        operation_name="create_account",
-        kwargs=kwargs, default_response_body=RESPONSE_200_JSON,
-        group_name="")
-    return response_tuple
+    name = request_body['name']
+    age = request_body['age']
+    mobile_number = request_body['mobile_number']
+
+    storage = StorageImplementation()
+    presenter = PresenterImplementation()
+    interactor = CreateBankInteractor(storage)
+
+    account_number_dict = interactor.create_account(bank_id, name, age, mobile_number, presenter)
+    response_dict = json.dumps(account_number_dict)
+    return HttpResponse(response_dict, status=201)
+

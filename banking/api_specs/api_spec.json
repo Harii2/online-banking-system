@@ -105,16 +105,16 @@
         }
       }
     },
-    "/{bank_name}/account/create/": {
+    "/{bank_id}/account/create/": {
       "post": {
         "operationId": "create_account",
         "description": "creating an account in the given bank name",
         "parameters": [
           {
-            "name": "bank_name",
+            "name": "bank_id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "integer"
           },
           {
             "name": "requestBody",
@@ -124,16 +124,20 @@
             "schema": {
               "type": "object",
               "properties": {
-                "username": {
+                "name": {
                   "type": "string"
                 },
-                "password": {
-                  "type": "string"
+                "age": {
+                  "type": "integer"
+                },
+                "mobile_number": {
+                  "type" : "string"
                 }
               },
               "required": [
-                "username",
-                "password"
+                "name",
+                "age",
+                "mobile_number"
               ]
             }
           }
@@ -146,18 +150,10 @@
               "properties": {
                 "account_number": {
                   "type": "integer"
-                },
-                "user_name": {
-                  "type": "string"
-                },
-                "bank_name": {
-                  "type": "string"
                 }
               },
               "required": [
-                "account_number",
-                "user_name",
-                "bank_name"
+                "account_number"
               ]
             }
           },
