@@ -218,7 +218,7 @@
         }
       }
     },
-    "/bank/{bank_id}/make-transaction/": {
+    "/bank/{bank_id}/make_transaction/": {
       "post": {
         "operationId": "make_transaction",
         "description": "Making transaction at bank level",
@@ -249,16 +249,20 @@
             "schema": {
               "type": "object",
               "properties": {
-                "username": {
-                  "type": "string"
+                "from_account_number": {
+                  "type": "integer"
                 },
-                "password": {
-                  "type": "string"
+                "to_account_number": {
+                  "type": "integer"
+                },
+                "amount": {
+                  "type": "integer"
                 }
               },
               "required": [
-                "username",
-                "password"
+                "from_account_number",
+                "to_account_number",
+                "amount"
               ]
             }
           }
@@ -298,7 +302,7 @@
         }
       }
     },
-    "/account/{account_id}/transaction-history/": {
+    "/account/{account_id}/transaction_history/": {
       "get": {
         "operationId": "get_all_transactions",
         "description": "Getting-All Transaction of given account id",
@@ -307,7 +311,7 @@
             "name": "account_id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "integer"
           },
           {
             "name": "limit",
@@ -325,7 +329,7 @@
             "name": "sortBy",
             "in": "query",
             "required": true,
-            "type": "integer"
+            "type": "string"
           },
           {
             "name": "type",

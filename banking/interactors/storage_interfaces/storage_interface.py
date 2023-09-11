@@ -1,10 +1,14 @@
 from abc import abstractmethod
 from banking.models import Bank, Staff, Account
-from banking.interactors.dtos import CreateBankRequestDTO
-from banking.interactors.dtos import CreateAccountRequestDTO
+from banking.interactors.dtos import CreateBankRequestDTO, CreateAccountRequestDTO, TransactionHistoryResponseDTO
 
 
 class StorageInterface:
+
+    @abstractmethod
+    def get_transaction_history(self, account_id: int) -> TransactionHistoryResponseDTO:
+        pass
+
     @abstractmethod
     def get_accountant_balance(self, account_id: int):
         pass

@@ -1,29 +1,18 @@
 from django_swagger_utils.drf_server.utils.decorator.interface_decorator \
     import validate_decorator
 from .validator_class import ValidatorClass
+import json
+from banking.storages.storage_implementation import StorageImplementation
+from banking.presenters.presenter_implementation import PresenterImplementation
+from banking.interactors.get_transaction_history_interactor import GetTransactionHistoryInteractor
+from django.http import HttpResponse
 
 
 @validate_decorator(validator_class=ValidatorClass)
 def api_wrapper(*args, **kwargs):
-    # ---------MOCK IMPLEMENTATION---------
-
-    try:
-        from banking.views.get_all_transactions.tests.test_case_01 \
-            import TEST_CASE as test_case
-    except ImportError:
-        from banking.views.get_all_transactions.tests.test_case_01 \
-            import test_case
-
-    from django_swagger_utils.drf_server.utils.server_gen.mock_response \
-        import mock_response
-    try:
-        from banking.views.get_all_transactions.request_response_mocks \
-            import RESPONSE_200_JSON
-    except ImportError:
-        RESPONSE_200_JSON = ''
-    response_tuple = mock_response(
-        app_name="banking", test_case=test_case,
-        operation_name="get_all_transactions",
-        kwargs=kwargs, default_response_body=RESPONSE_200_JSON,
-        group_name="")
-    return response_tuple
+    path_params = kwargs['path_params']
+    account_id = path_params['account_id']
+    storage = StorageImplementation()
+    presenter = PresenterImplementation()
+    interactor = GetTransactionHistoryInteractor(storage)
+    return interactor.get_transaction_history(account_id, presenter)

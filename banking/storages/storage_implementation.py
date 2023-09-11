@@ -1,12 +1,34 @@
 from banking.interactors.storage_interfaces.storage_interface import StorageInterface
 from banking.constants.exception_messages import *
-from banking.models import Bank, Staff, Account
+from banking.models import Bank, Staff, Account, Transaction
 from banking.exceptions.custom_exceptions import *
-from banking.interactors.dtos import CreateBankRequestDTO
+from banking.interactors.dtos import CreateBankRequestDTO, TransactionHistoryResponseDTO
 from banking.interactors.dtos import CreateAccountRequestDTO
+from django.db.models import Q
+from banking.interactors.dtos import TransactionDTO, TransactionHistoryResponseDTO
 
 
 class StorageImplementation(StorageInterface):
+
+    def get_transaction_history(self, account_id: int) -> TransactionHistoryResponseDTO:
+        from_acc = Q(from_account_id=account_id)
+        to_acc = Q(to_account_id=account_id)
+        transaction_history = Transaction.objects.filter(from_acc | to_acc)
+        transactions = []
+        for transaction in transaction_history:
+            trns = TransactionDTO(
+                transaction_id=transaction.transaction_id,
+                transaction_type=transaction.transaction_type,
+                amount=transaction.amount,
+                date_time=transaction.date_time.strftime("%d-%m-%Y %H:%M:%S"),
+                to_account_id=transaction.type == transaction.to_account_id if transaction.type == 'DEBIT' else transaction.from_account_id
+            )
+            transactions.append(trns)
+        transaction_dto_response = TransactionHistoryResponseDTO(
+            transaction_history=transactions
+        )
+        return transaction_dto_response
+
     def get_accountant_balance(self, account_id: int) -> int:
         balance = Account.objects.get(pk=account_id).balance
         print("Balance in get_account_balance: ", balance)

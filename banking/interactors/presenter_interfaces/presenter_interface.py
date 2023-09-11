@@ -1,8 +1,13 @@
 from abc import abstractmethod
-from banking.interactors.dtos import CreateBankResponseDTO
-
+from banking.interactors.dtos import CreateBankResponseDTO, TransactionHistoryResponseDTO
+from django.http import HttpResponse
 
 class PresenterInterface:
+
+    @abstractmethod
+    def get_transaction_history_response(self, transaction_history: TransactionHistoryResponseDTO) -> HttpResponse:
+        pass
+
     @abstractmethod
     def get_account_balance_response(self, balance: int) -> dict:
         pass

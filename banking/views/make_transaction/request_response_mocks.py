@@ -2,8 +2,9 @@
 
 REQUEST_BODY_JSON = """
 {
-    "username": "string",
-    "password": "string"
+    "from_account_number": 1,
+    "to_account_number": 1,
+    "amount": 1
 }
 """
 
