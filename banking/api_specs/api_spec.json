@@ -56,12 +56,16 @@
                 },
                 "bank_manager_email": {
                   "type": "string"
+                },
+                "branch": {
+                  "type": "string"
                 }
               },
               "required": [
                 "bank_name",
                 "ifsc_code",
-                "bank_manager_email"
+                "bank_manager_email",
+                "branch"
               ]
             }
           }
@@ -72,24 +76,15 @@
             "schema": {
               "type": "object",
               "properties": {
-                "id": {
+                "bank_id": {
                   "type": "integer"
                 },
-                "bank_name": {
-                  "type": "string"
-                },
-                "ifsc_code": {
-                  "type": "string"
-                },
-                "bank_manager_email": {
-                  "type": "string"
+                "manager_id": {
+                  "type": "integer"
                 }
               },
               "required": [
-                "id",
-                "bank_name",
-                "ifsc_code",
-                "bank_manager_email"
+                "bank_id"
               ]
             }
           },

@@ -12,7 +12,7 @@ RESPONSE_201_JSON = """
 {
     "account_number": 1,
     "user_name": "string",
-    "name": "string"
+    "bank_name": "string"
 }
 """
 

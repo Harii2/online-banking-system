@@ -2,19 +2,18 @@
 
 REQUEST_BODY_JSON = """
 {
-    "name": "string",
+    "bank_name": "string",
     "ifsc_code": "string",
-    "bank_manager_email": "string"
+    "bank_manager_email": "string",
+    "branch": "string"
 }
 """
 
 
 RESPONSE_201_JSON = """
 {
-    "id": 1,
-    "name": "string",
-    "ifsc_code": "string",
-    "bank_manager_email": "string"
+    "bank_id": 1,
+    "manager_id": 1
 }
 """
 

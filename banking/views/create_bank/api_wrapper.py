@@ -1,29 +1,30 @@
+import json
+from django.http import HttpResponse
+
 from django_swagger_utils.drf_server.utils.decorator.interface_decorator \
     import validate_decorator
 from .validator_class import ValidatorClass
+from banking.storages.storage_implementation import StorageImplementation
+from banking.presenters.presenter_implementation import PresenterImplementation
+from banking.interactors.create_bank_interactor import CreateBankInteractor
 
 
 @validate_decorator(validator_class=ValidatorClass)
 def api_wrapper(*args, **kwargs):
-    # ---------MOCK IMPLEMENTATION---------
-
-    try:
-        from banking.views.create_bank.tests.test_case_01 \
-            import TEST_CASE as test_case
-    except ImportError:
-        from banking.views.create_bank.tests.test_case_01 \
-            import test_case
-
-    from django_swagger_utils.drf_server.utils.server_gen.mock_response \
-        import mock_response
-    try:
-        from banking.views.create_bank.request_response_mocks \
-            import RESPONSE_200_JSON
-    except ImportError:
-        RESPONSE_200_JSON = ''
-    response_tuple = mock_response(
-        app_name="banking", test_case=test_case,
-        operation_name="create_bank",
-        kwargs=kwargs, default_response_body=RESPONSE_200_JSON,
-        group_name="")
-    return response_tuple
+    request_body = kwargs['request_data']
+    bank_name = request_body['bank_name']
+    ifsc_code = request_body['ifsc_code']
+    bank_manager_email = request_body['bank_manager_email']
+    # branch = request_body['branch']
+    storage = StorageImplementation()
+    presenter = PresenterImplementation()
+    interactor = CreateBankInteractor(storage)
+    bank_id_dict = interactor.create_bank(
+        bank_name=bank_name,
+        ifsc_code=ifsc_code,
+        bank_manager_email=bank_manager_email,
+        branch="Hyderabad",
+        presenter=presenter
+    )
+    response_data = json.dumps(bank_id_dict)
+    return HttpResponse(response_data, status=201)

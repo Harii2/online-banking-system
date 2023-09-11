@@ -61,6 +61,8 @@ SWAGGER_UTILS = {
     "HOST": os.environ.get('APIGATEWAY_ENDPOINT', '127.0.0.1:8000'),
 }
 
+DSU_RAISE_EXCEPTION_FOR_API_RESPONSE_STATUS_CODE = True
+
 API_KEY_AUTHENTICATION_CLASS = \
     "online_banking_system.common.authentication.APIKeyAuthentication"
 

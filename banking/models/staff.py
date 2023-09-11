@@ -8,12 +8,12 @@ class Staff(models.Model):
         ('CASHIER', 'Cashier'),
         ('SUPERVISOR', 'Supervisor'),
     ]
-    name = models.CharField(max_length=200)
-    email = models.EmailField(max_length=100)
-    mobile_number = models.CharField(max_length=10)
+    name = models.CharField(max_length=255)
+    email = models.EmailField(max_length=255)
+    mobile_number = models.CharField(max_length=255, null=True)
     joined_at = models.DateTimeField(auto_now_add=True)
-    role = models.CharField(max_length=20, choices=ROLES)
-    bank_id = models.ForeignKey(Bank, on_delete=models.DO_NOTHING)
+    role = models.CharField(max_length=255, choices=ROLES)
+    bank_id = models.ForeignKey(Bank, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
