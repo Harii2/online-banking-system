@@ -44,3 +44,19 @@ class MakeTransactionDTO:
     from_account_number: int
     to_account_number: int
     amount: int
+    transaction_type: str
+
+
+@dataclass
+class GetAllTransactionsQueryParamsDTO:
+    limit: int = 100
+    offset: int = 0
+    sort_by: str = "date_time"
+    type: str = "CREDIT"
+
+
+@dataclass
+class MakeTransactionResponseDTO:
+    transaction_id: int
+    amount_paid: int
+    message: str

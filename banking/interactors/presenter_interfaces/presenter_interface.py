@@ -1,8 +1,19 @@
 from abc import abstractmethod
-from banking.interactors.dtos import CreateBankResponseDTO, TransactionHistoryResponseDTO
+from banking.interactors.dtos import *
 from django.http import HttpResponse
 
+
 class PresenterInterface:
+    @abstractmethod
+    def get_make_transaction_response(self, make_transaction_response_dto: MakeTransactionResponseDTO) -> HttpResponse:
+        pass
+    @abstractmethod
+    def raise_insufficient_balance(self, *args, **kwargs):
+        pass
+
+    @abstractmethod
+    def raise_invalid_amount(self, *args, **kwargs):
+        pass
 
     @abstractmethod
     def get_transaction_history_response(self, transaction_history: TransactionHistoryResponseDTO) -> HttpResponse:

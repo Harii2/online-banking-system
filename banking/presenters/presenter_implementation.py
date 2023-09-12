@@ -4,13 +4,30 @@ from banking.interactors.presenter_interfaces.presenter_interface import Present
 from django_swagger_utils.drf_server.exceptions import BadRequest, NotFound
 from banking.constants.exception_messages import *
 from typing import Dict
-from banking.interactors.dtos import CreateBankResponseDTO, TransactionHistoryResponseDTO
+from banking.interactors.dtos import *
 from django.http import HttpResponse
 
 
 class PresenterImplementation(PresenterInterface):
+    def get_make_transaction_response(self, make_transaction_response_dto: MakeTransactionResponseDTO) -> HttpResponse:
+        transaction_id = make_transaction_response_dto.transaction_id
+        amount_paid = make_transaction_response_dto.amount_paid
+        message = make_transaction_response_dto.message
+        response = json.dumps({
+            'transaction_id': transaction_id,
+            'amount_paid': amount_paid,
+            'message': message
+        })
+        return HttpResponse(response, status=201)
+
+    def raise_insufficient_balance(self, *args, **kwargs):
+        raise BadRequest(*INSUFFICIENT_BALANCE)
+
+    def raise_invalid_amount(self, *args, **kwargs):
+        raise BadRequest(*INVALID_AMOUNT)
+
     def get_transaction_history_response(self, transaction_history: TransactionHistoryResponseDTO) -> HttpResponse:
-        transaction_history_dict = transaction_history
+        print(transaction_history.transaction_history)
         transactions = []
         for transaction in transaction_history.transaction_history:
             trns = {
@@ -21,6 +38,7 @@ class PresenterImplementation(PresenterInterface):
                 'to_account_id': transaction.to_account_id
             }
             transactions.append(trns)
+        print(transactions)
         json_data = json.dumps(transactions)
         return HttpResponse(json_data, status=200)
 

@@ -11,4 +11,4 @@ class Transaction(models.Model):
     to_account_id = models.ForeignKey(Account, on_delete=models.DO_NOTHING, related_name="to_account_id")
     amount = models.IntegerField()
     type = models.CharField(max_length=255, choices=TRANSACTION_TYPE)
-    made_at = models.DateTimeField(auto_now_add=True)
+    date_time = models.DateTimeField(auto_now_add=True)

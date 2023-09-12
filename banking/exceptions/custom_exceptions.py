@@ -29,5 +29,11 @@ class InvalidUserDetails(Exception):
     pass
 
 
+class InvalidAmount(Exception):
+    pass
+
+class InsufficientBalance(Exception):
+    pass
+
 class InvalidAccountId(ObjectDoesNotExist):
     pass

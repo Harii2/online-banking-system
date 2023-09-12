@@ -12,13 +12,13 @@ from banking.interactors.dtos import MakeTransactionDTO
 def api_wrapper(*args, **kwargs):
     path_params = kwargs['path_params']
     request_body = kwargs['request_data']
-    account_id = path_params['account_id']
     storage = StorageImplementation()
     presenter = PresenterImplementation()
     interactor = MakeTransaction(storage)
     make_transaction_dto = MakeTransactionDTO(
         from_account_number=request_body['from_account_number'],
         to_account_number=request_body['to_account_number'],
-        amount=request_body['amount']
+        amount=request_body['amount'],
+        transaction_type=request_body['transaction_type'].upper()
     )
     return interactor.make_transaction(make_transaction_dto, presenter)

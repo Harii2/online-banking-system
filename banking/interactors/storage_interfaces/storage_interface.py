@@ -1,12 +1,25 @@
 from abc import abstractmethod
 from banking.models import Bank, Staff, Account
 from banking.interactors.dtos import CreateBankRequestDTO, CreateAccountRequestDTO, TransactionHistoryResponseDTO
+from banking.interactors.dtos import *
 
 
 class StorageInterface:
+    @abstractmethod
+    def validate_debit_user_balance(self, account_id: int, amount: int):
+        pass
 
     @abstractmethod
-    def get_transaction_history(self, account_id: int) -> TransactionHistoryResponseDTO:
+    def make_transaction(self, make_transaction_dto: MakeTransactionDTO) -> MakeTransactionResponseDTO:
+        pass
+
+    @abstractmethod
+    def validate_amount(self, amount: int):
+        pass
+
+    @abstractmethod
+    def get_transaction_history(self, account_id: int,
+                                query_params_dto: GetAllTransactionsQueryParamsDTO) -> TransactionHistoryResponseDTO:
         pass
 
     @abstractmethod
@@ -42,5 +55,5 @@ class StorageInterface:
         pass
 
     @abstractmethod
-    def create_account(self, create_account_request_dto: CreateAccountRequestDTO) -> int :
+    def create_account(self, create_account_request_dto: CreateAccountRequestDTO) -> int:
         pass

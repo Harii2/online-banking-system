@@ -4,7 +4,8 @@ REQUEST_BODY_JSON = """
 {
     "from_account_number": 1,
     "to_account_number": 1,
-    "amount": 1
+    "amount": 1,
+    "transaction_type": "string"
 }
 """
 

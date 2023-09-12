@@ -218,29 +218,11 @@
         }
       }
     },
-    "/bank/{bank_id}/make_transaction/": {
+    "/bank/make_transaction/": {
       "post": {
         "operationId": "make_transaction",
         "description": "Making transaction at bank level",
         "parameters": [
-          {
-            "name": "bank_id",
-            "in": "path",
-            "required": true,
-            "description": "bank_name",
-            "type": "integer"
-          },
-          {
-            "name": "type",
-            "in": "query",
-            "required": true,
-            "description": "EIther credit or Debit",
-            "type": "string",
-            "enum": [
-              "Credit",
-              "Debit"
-            ]
-          },
           {
             "name": "requestBody",
             "in": "body",
@@ -257,6 +239,9 @@
                 },
                 "amount": {
                   "type": "integer"
+                },
+                "transaction_type": {
+                  "type": "string"
                 }
               },
               "required": [
@@ -354,7 +339,7 @@
                     "type": "integer"
                   },
                   "transaction_type": {
-                    "type": "integer"
+                    "type": "string"
                   },
                   "amount": {
                     "type": "integer"

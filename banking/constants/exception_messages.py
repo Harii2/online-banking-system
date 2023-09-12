@@ -14,6 +14,16 @@ INVALID_AGE = (
     'Age must be >=8 years'
 )
 
+INSUFFICIENT_BALANCE = (
+    'Insufficient Balance',
+    'InSufficient Funds in debit account'
+)
+
+INVALID_AMOUNT = (
+    'Invalid Amount',
+    "Amount can't be negative"
+)
+
 INVALID_USER_NAME = (
     'Name is not valid',
     'Invalid User name'
