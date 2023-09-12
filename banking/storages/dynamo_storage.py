@@ -26,7 +26,7 @@ class DynamoStorage(StorageInterface):
     def validate_ifsc_code(self, ifsc_code: str):
         pass
 
-    def is_manager_already_exists(self, manager_email: str):
+    def manager_already_exists(self, manager_email: str):
         pass
 
     def create_bank(self, create_bank_request_dto: CreateBankRequestDTO) -> int:

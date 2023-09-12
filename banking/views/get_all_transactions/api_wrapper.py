@@ -29,5 +29,5 @@ def api_wrapper(*args, **kwargs):
     account_id = path_params['account_id']
     storage = StorageImplementation()
     presenter = PresenterImplementation()
-    interactor = GetTransactionHistoryInteractor(storage)
-    return interactor.get_transaction_history(account_id, query_params_dto, presenter)
+    interactor = GetTransactionHistoryInteractor(storage=storage)
+    return interactor.get_transaction_history(account_id=account_id, query_params_dto=query_params_dto, presenter=presenter)

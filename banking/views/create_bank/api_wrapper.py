@@ -20,20 +20,14 @@ def api_wrapper(*args, **kwargs):
     # branch = request_body['branch']
     storage = StorageImplementation()
     presenter = PresenterImplementation()
-    interactor = CreateBankInteractor(storage)
+    interactor = CreateBankInteractor(storage=storage)
     create_bank_request_dto = CreateBankRequestDTO(
         bank_name=bank_name,
         ifsc_code=ifsc_code,
         bank_manager_email=bank_manager_email,
         branch=branch
     )
-    create_bank_response_dto = interactor.create_bank(
-        create_bank_request_dto,
+    return interactor.create_bank(
+        create_bank_request_dto=create_bank_request_dto,
         presenter=presenter
     )
-    bank_manager_ids_dict = {
-        "manager_id": create_bank_response_dto.manager_id,
-        "bank_id": create_bank_response_dto.bank_id
-    }
-    response_data = json.dumps(bank_manager_ids_dict)
-    return HttpResponse(response_data, status=201)

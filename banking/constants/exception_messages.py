@@ -1,17 +1,13 @@
 
-INVALID_BANK_DETAILS = (
-    'Invalid Bank name',
-    'Invalid Ifsc Code'
-)
 
 INVALID_IFSC_CODE = (
-    'Invalid_IFSC_code',
-    'IFSC_code already exists'
+    'IFSC_code already exists',
+    'INVALID_IFSC_CODE'
 )
 
 INVALID_AGE = (
-    'Invalid Age',
-    'Age must be >=8 years'
+    'Age must be >=8 years',
+    'INVALID_AGE'
 )
 
 INSUFFICIENT_BALANCE = (
@@ -20,36 +16,31 @@ INSUFFICIENT_BALANCE = (
 )
 
 INVALID_AMOUNT = (
-    "Amount can't be negative",
+    "Amount must be >=1 ",
     "INVALID_AMOUNT"
 )
 
 INVALID_USER_NAME = (
     'Name is not valid',
-    'Invalid User name'
+    'INVALID_USER_NAME'
 )
 
 INVALID_MOBILE_NUMBER = (
-    'Invalid Mobile Number',
-    'Mobile Number must be 10 digit words'
+    'Mobile Number must be 10 digit words',
+    'INVALID_MOBILE_NUMBER'
 )
 
 INVALID_ACCOUNT_ID = (
-    'Invalid Account Id',
-    'User not exists with that account id'
+    'User not exists with that account id',
+    'INVALID_ACCOUNT_ID'
 )
 
 INVALID_MANAGER_EMAIL = (
-    'This email already exists',
-    'This Manager already in use'
+    'This Manager already in use or This Mail Already Exists',
+    'INVALID_MANAGER_EMAIL'
 )
 
 BANK_NOT_EXISTS = (
     'Bank Not Exists',
-    'In the given path bank id does not exists'
-)
-
-INVALID_USER_DETAILS = (
-    'Invalid accountant name, age, mobile',
-    'There should be invalid name, age, mobile'
+    'BANK_NOT_EXISTS'
 )

@@ -17,7 +17,5 @@ def api_wrapper(*args, **kwargs):
     account_id = path_params['account_id']
     storage = StorageImplementation()
     presenter = PresenterImplementation()
-    interactor = GetAccountBalanceInteractor(storage)
-    account_balance_dict = interactor.get_accountant_balance(account_id, presenter)
-    response_dict = json.dumps(account_balance_dict)
-    return HttpResponse(response_dict, status=200)
+    interactor = GetAccountBalanceInteractor(storage=storage)
+    return interactor.get_accountant_balance(account_id=account_id, presenter=presenter)

@@ -1,6 +1,10 @@
 from django.core.exceptions import ObjectDoesNotExist
 
 
+class InvalidAccountId(ObjectDoesNotExist):
+    pass
+
+
 class InvalidAge(Exception):
     pass
 
@@ -32,8 +36,6 @@ class InvalidUserDetails(Exception):
 class InvalidAmount(Exception):
     pass
 
-class InsufficientBalance(Exception):
-    pass
 
-class InvalidAccountId(ObjectDoesNotExist):
+class InsufficientBalance(Exception):
     pass

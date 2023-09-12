@@ -35,7 +35,7 @@ class StorageInterface:
         pass
 
     @abstractmethod
-    def is_manager_already_exists(self, manager_email: str):
+    def manager_already_exists(self, manager_email: str):
         pass
 
     @abstractmethod

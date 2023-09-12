@@ -14,11 +14,11 @@ def api_wrapper(*args, **kwargs):
     request_body = kwargs['request_data']
     storage = StorageImplementation()
     presenter = PresenterImplementation()
-    interactor = MakeTransaction(storage)
+    interactor = MakeTransaction(storage=storage)
     make_transaction_dto = MakeTransactionDTO(
         from_account_number=request_body['from_account_number'],
         to_account_number=request_body['to_account_number'],
         amount=request_body['amount'],
         transaction_type=request_body['transaction_type'].upper()
     )
-    return interactor.make_transaction(make_transaction_dto, presenter)
+    return interactor.make_transaction(make_transaction_dto=make_transaction_dto, presenter=presenter)

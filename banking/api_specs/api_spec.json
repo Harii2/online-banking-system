@@ -63,8 +63,30 @@
             "res_status": {
               "type": "string",
               "enum": [
-                "INSUFFICIENT_BALANCE",
-                "INVALID_AMOUNT"
+                "INVALID_USER_NAME",
+                "INVALID_AGE",
+                "INVALID_MOBILE_NUMBER"
+              ]
+            }
+          }
+        }
+      ]
+      }
+    },
+    "CreateBankAccountNotFoundResponse":  {
+      "description": "Create Bank Account Not Found Response",
+      "schema": {
+        "allOf": [
+        {
+          "$ref": "#/definitions/CommonHttpExceptionResponse"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "res_status": {
+              "type": "string",
+              "enum": [
+                "BANK_NOT_EXISTS"
               ]
             }
           }
@@ -85,6 +107,168 @@
                 "account_number"
               ]
             }
+    },
+    "CreateBankBadRequestResponse": {
+      "description": "Create Bank Bad Request",
+      "schema": {
+        "allOf": [
+        {
+          "$ref": "#/definitions/CommonHttpExceptionResponse"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "res_status": {
+              "type": "string",
+              "enum": [
+                "INVALID_IFSC_CODE",
+                "INVALID_MANAGER_EMAIL"
+              ]
+            }
+          }
+        }
+      ]
+      }
+    },
+    "CreateBankValidResponse": {
+      "description": "CREATED SUCCESSFULLY",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "bank_id": {
+                  "type": "integer"
+                },
+                "manager_id": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "bank_id"
+              ]
+            }
+    },
+    "GetAccountBalanceValidResponse": {
+      "description": "Getting users bank balance",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "balance": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "balance"
+              ]
+            }
+    },
+    "GetAccountBadRequestResponse": {
+      "description": "Get Account Balance Bad Response",
+      "schema": {
+        "allOf": [
+        {
+          "$ref": "#/definitions/CommonHttpExceptionResponse"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "res_status": {
+              "type": "string",
+              "enum": [
+                "INVALID_ACCOUNT_ID"
+              ]
+            }
+          }
+        }
+      ]
+      }
+    },
+    "MakeTransactionBadRequestResponse": {
+      "description": "Get Account Balance Bad Response",
+      "schema": {
+        "allOf": [
+        {
+          "$ref": "#/definitions/CommonHttpExceptionResponse"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "res_status": {
+              "type": "string",
+              "enum": [
+                "INVALID_ACCOUNT_ID",
+                "INVALID_AMOUNT",
+                "INSUFFICIENT_BALANCE"
+              ]
+            }
+          }
+        }
+      ]
+      }
+    },
+    "MakeTransactionValidResponse": {
+      "description": "SUCCESSFULLY MADE CREATED",
+      "schema": {
+              "type": "object",
+              "properties": {
+                "transaction_id": {
+                  "type": "integer"
+                },
+                "amount_paid": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+      }
+    },
+    "GetTransactionHistoryValidResponse": {
+      "description": "Successfully Retrieved",
+       "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "transaction_id": {
+                    "type": "integer"
+                  },
+                  "transaction_type": {
+                    "type": "string"
+                  },
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "date_time": {
+                    "type": "string"
+                  },
+                  "to_account_id": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+    },
+    "GetTransactionHistoryBadRequestResponse": {
+      "description": "Get Transaction History Bad Response",
+      "schema": {
+        "allOf": [
+        {
+          "$ref": "#/definitions/CommonHttpExceptionResponse"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "res_status": {
+              "type": "string",
+              "enum": [
+                "INVALID_ACCOUNT_ID",
+                "INVALID_AMOUNT"
+              ]
+            }
+          }
+        }
+      ]
+      }
     }
   },
   "paths": {
@@ -125,35 +309,10 @@
         ],
         "responses": {
           "201": {
-            "description": "CREATED SUCCESSFULLY",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "bank_id": {
-                  "type": "integer"
-                },
-                "manager_id": {
-                  "type": "integer"
-                }
-              },
-              "required": [
-                "bank_id"
-              ]
-            }
+            "$ref": "#/responses/CreateBankValidResponse"
           },
-          "401": {
-            "description": "Invalid Details",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "message"
-              ]
-            }
+          "400": {
+            "$ref": "#/responses/CreateBankBadRequestResponse"
           }
         }
       }
@@ -202,19 +361,8 @@
           "400": {
             "$ref": "#/responses/CreateBankAccountBadRequestResponse"
           },
-          "401": {
-            "description": "Invalid Details",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "message"
-              ]
-            }
+          "404": {
+            "$ref": "#/responses/CreateBankAccountNotFoundResponse"
           }
         }
       }
@@ -233,32 +381,10 @@
         ],
         "responses": {
           "200": {
-            "description": "Getting users bank balance",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "balance": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "balance"
-              ]
-            }
+            "$ref": "#/responses/GetAccountBalanceValidResponse"
           },
-          "401": {
-            "description": "Invalid Details",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "message"
-              ]
-            }
+          "400": {
+            "$ref": "#/responses/GetAccountBadRequestResponse"
           }
         }
       }
@@ -299,35 +425,10 @@
         ],
         "responses": {
           "201": {
-            "description": "SUCCESFULLY MADE TRANSACTION",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "transaction_id": {
-                  "type": "integer"
-                },
-                "amount_paid": {
-                  "type": "integer"
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
-            }
+            "$ref": "#/responses/MakeTransactionValidResponse"
           },
-          "401": {
-            "description": "Invalid Details",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "message"
-              ]
-            }
+          "400": {
+            "$ref": "#/responses/MakeTransactionBadRequestResponse"
           }
         }
       }
@@ -335,7 +436,7 @@
     "/account/{account_id}/transaction_history/": {
       "get": {
         "operationId": "get_all_transactions",
-        "description": "Getting-All Transaction of given account id",
+        "description": "Getting All Transaction of given account id",
         "parameters": [
           {
             "name": "account_id",
@@ -373,45 +474,11 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "All Transaction by given fields",
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "transaction_id": {
-                    "type": "integer"
-                  },
-                  "transaction_type": {
-                    "type": "string"
-                  },
-                  "amount": {
-                    "type": "integer"
-                  },
-                  "date_time": {
-                    "type": "string"
-                  },
-                  "to_account_id": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
+          "201": {
+            "$ref": "#/responses/GetTransactionHistoryValidResponse"
           },
-          "401": {
-            "description": "Invalid Details",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "message"
-              ]
-            }
+          "400": {
+           "$ref": "#/responses/GetTransactionHistoryBadRequestResponse"
           }
         }
       }

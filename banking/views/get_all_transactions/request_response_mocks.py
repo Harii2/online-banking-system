@@ -1,7 +1,7 @@
 
 
 
-RESPONSE_200_JSON = """
+RESPONSE_201_JSON = """
 [
     {
         "transaction_id": 1,
@@ -13,9 +13,11 @@ RESPONSE_200_JSON = """
 ]
 """
 
-RESPONSE_401_JSON = """
+RESPONSE_400_JSON = """
 {
-    "message": "string"
+    "response": "string",
+    "http_status_code": 1,
+    "res_status": "INVALID_ACCOUNT_ID"
 }
 """
 

@@ -12,6 +12,7 @@ from banking.constants.enum import StatusCode
 
 class PresenterImplementation(PresenterInterface, HTTPResponseMixin):
     def get_make_transaction_response(self, make_transaction_response_dto: MakeTransactionResponseDTO) -> HttpResponse:
+        print(make_transaction_response_dto)
         transaction_id = make_transaction_response_dto.transaction_id
         amount_paid = make_transaction_response_dto.amount_paid
         message = make_transaction_response_dto.message
@@ -28,15 +29,20 @@ class PresenterImplementation(PresenterInterface, HTTPResponseMixin):
             "http_status_code": StatusCode.BAD_REQUEST.value,
             "res_status": INSUFFICIENT_BALANCE[1],
         }
-        raise self.prepare_400_bad_request_response(response_dict=response_dict)
+        return self.prepare_400_bad_request_response(response_dict=response_dict)
 
     def raise_invalid_amount(self, *args, **kwargs):
-        raise BadRequest(*INVALID_AMOUNT)
+        response_dict = {
+            "response": INVALID_AMOUNT[0],
+            "http_status_code": StatusCode.BAD_REQUEST.value,
+            "res_status": INVALID_AMOUNT[1],
+        }
+        return self.prepare_400_bad_request_response(response_dict=response_dict)
 
-    def get_transaction_history_response(self, transaction_history: TransactionHistoryResponseDTO) -> HttpResponse:
-        print(transaction_history.transaction_history)
+    def get_transaction_history_response(self, transaction_history_response_dto: TransactionHistoryResponseDTO) -> HttpResponse:
+        print(transaction_history_response_dto.transaction_history)
         transactions = []
-        for transaction in transaction_history.transaction_history:
+        for transaction in transaction_history_response_dto.transaction_history:
             trns = {
                 'transaction_id': transaction.transaction_id,
                 'transaction_type': transaction.transaction_type,
@@ -45,42 +51,76 @@ class PresenterImplementation(PresenterInterface, HTTPResponseMixin):
                 'to_account_id': transaction.to_account_id
             }
             transactions.append(trns)
-        print(transactions)
-        json_data = json.dumps(transactions)
-        return HttpResponse(json_data, status=200)
+        return self.prepare_200_success_response(response_dict=transactions)
 
     def raise_invalid_age(self, *args, **kwargs):
-        raise BadRequest(*INVALID_AGE)
+        response_dict = {
+            "response": INVALID_AGE[0],
+            "http_status_code": StatusCode.BAD_REQUEST.value,
+            "res_status": INVALID_AGE[1],
+        }
+        return self.prepare_400_bad_request_response(response_dict=response_dict)
 
     def raise_invalid_mobile_number(self, *args, **kwargs):
-        raise BadRequest(*INVALID_MOBILE_NUMBER)
+        response_dict = {
+            "response": INVALID_MOBILE_NUMBER[0],
+            "http_status_code": StatusCode.BAD_REQUEST.value,
+            "res_status": INVALID_MOBILE_NUMBER[1],
+        }
+        return self.prepare_400_bad_request_response(response_dict=response_dict)
 
     def raise_invalid_user_name(self, *args, **kwargs):
-        raise BadRequest(*INVALID_USER_NAME)
+        response_dict = {
+            "response": INVALID_USER_NAME[0],
+            "http_status_code": StatusCode.BAD_REQUEST.value,
+            "res_status": INVALID_USER_NAME[1],
+        }
+        return self.prepare_400_bad_request_response(response_dict=response_dict)
 
     def get_account_balance_response(self, balance: int) -> Dict[str, int]:
         balance_dict = {'balance': balance}
-        return balance_dict
+        return self.prepare_200_success_response(response_dict=balance_dict)
 
     def raise_invalid_account_id(self, *args, **kwargs):
-        raise BadRequest(*INVALID_ACCOUNT_ID)
+        response_dict = {
+            "response": INVALID_ACCOUNT_ID[0],
+            "http_status_code": StatusCode.BAD_REQUEST.value,
+            "res_status": INVALID_ACCOUNT_ID[1],
+        }
+        return self.prepare_400_bad_request_response(response_dict=response_dict)
 
     def raise_ifsc_code_already_exists(self, *args, **kwargs):
-        raise BadRequest(*INVALID_IFSC_CODE)
+        response_dict = {
+            "response": INVALID_IFSC_CODE[0],
+            "http_status_code": StatusCode.BAD_REQUEST.value,
+            "res_status": INVALID_IFSC_CODE[1],
+        }
+        print(response_dict)
+        return self.prepare_400_bad_request_response(response_dict=response_dict)
 
     def raise_manager_email_already_exists(self, *args, **kwargs):
-        raise BadRequest(*INVALID_MANAGER_EMAIL)
+        response_dict = {
+            "response": INVALID_MANAGER_EMAIL[0],
+            "http_status_code": StatusCode.BAD_REQUEST.value,
+            "res_status": INVALID_MANAGER_EMAIL[1],
+        }
+        return self.prepare_400_bad_request_response(response_dict=response_dict)
 
     def raise_bank_not_exists(self, *args, **kwargs):
-        raise NotFound(*BANK_NOT_EXISTS)
+        response_dict = {
+            "response": BANK_NOT_EXISTS[0],
+            "http_status_code": StatusCode.BAD_REQUEST.value,
+            "res_status": BANK_NOT_EXISTS[1],
+        }
+        return self.prepare_404_not_found_response(response_dict=response_dict)
 
-    def raise_invalid_user_details(self, *args, **kwargs):
-        raise BadRequest(*INVALID_USER_DETAILS)
-
-    def get_create_bank_response(self, bank_id: int, manager_id: int) -> CreateBankResponseDTO:
-        create_bank_response_dto = CreateBankResponseDTO(bank_id=bank_id, manager_id=manager_id)
-        return create_bank_response_dto
+    def get_create_bank_response(self, bank_id: int, manager_id: int) :
+        create_bank_response = {
+            'bank_id': bank_id,
+            'manager_id': manager_id
+        }
+        return self.prepare_201_created_response(response_dict=create_bank_response)
 
     def get_create_account_response(self, account_number: int) -> Dict[str, int]:
         account_number_dict = {'account_number': account_number}
-        return account_number_dict
+        return self.prepare_201_created_response(response_dict=account_number_dict)

@@ -27,9 +27,9 @@ class StorageImplementation(StorageInterface):
         )
         if transaction_type == 'DEBIT':
             Account.objects.filter(pk=from_account_number).update(
-                balance=Account.objects.get(pk=from_account_number).balance - amount)
+                balance=self.get_accountant_balance(account_id=from_account_number) - amount)
             Account.objects.filter(pk=to_account_number).update(
-                balance=Account.objects.get(pk=to_account_number).balance + amount)
+                balance=self.get_accountant_balance(account_id=to_account_number) + amount)
             transaction = Transaction.objects.create(
                 from_account_id_id=from_account_number,
                 to_account_id_id=to_account_number,
@@ -41,9 +41,9 @@ class StorageImplementation(StorageInterface):
             make_transaction_response_dto.message = 'SUCCESS'
         if transaction_type == 'CREDIT':
             Account.objects.filter(pk=from_account_number).update(
-                balance=Account.objects.get(pk=from_account_number).balance + amount)
+                balance=self.get_accountant_balance(account_id=from_account_number) + amount)
             Account.objects.filter(pk=to_account_number).update(
-                balance=Account.objects.get(pk=to_account_number).balance - amount)
+                balance=self.get_accountant_balance(account_id=to_account_number) - amount)
             transaction = Transaction.objects.create(
                 from_account_id_id=from_account_number,
                 to_account_id_id=to_account_number,
@@ -88,7 +88,6 @@ class StorageImplementation(StorageInterface):
 
     def get_accountant_balance(self, account_id: int) -> int:
         balance = Account.objects.get(pk=account_id).balance
-        print("Balance in get_account_balance: ", balance)
         return balance
 
     def validate_account_id(self, account_id: int) -> None:
@@ -101,7 +100,7 @@ class StorageImplementation(StorageInterface):
         if is_exists:
             raise IFSCCodeAlreadyExists
 
-    def is_manager_already_exists(self, manager_email: str):
+    def manager_already_exists(self, manager_email: str):
         is_exists = Staff.objects.filter(email=manager_email).exists()
         if is_exists:
             raise ManagerEmailAlreadyExists
