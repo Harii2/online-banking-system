@@ -225,7 +225,10 @@
     "GetTransactionHistoryValidResponse": {
       "description": "Successfully Retrieved",
        "schema": {
-              "type": "array",
+              "type": "object",
+         "properties": {
+           "transactions": {
+             "type": "array",
               "items": {
                 "type": "object",
                 "properties": {
@@ -246,6 +249,8 @@
                   }
                 }
               }
+           }
+         }
             }
     },
     "GetTransactionHistoryBadRequestResponse": {
