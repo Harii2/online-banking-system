@@ -12,7 +12,6 @@ from banking.constants.enum import StatusCode
 
 class PresenterImplementation(PresenterInterface, HTTPResponseMixin):
     def get_make_transaction_response(self, make_transaction_response_dto: MakeTransactionResponseDTO) -> HttpResponse:
-        print(make_transaction_response_dto)
         transaction_id = make_transaction_response_dto.transaction_id
         amount_paid = make_transaction_response_dto.amount_paid
         message = make_transaction_response_dto.message
@@ -51,7 +50,10 @@ class PresenterImplementation(PresenterInterface, HTTPResponseMixin):
                 'to_account_id': transaction.to_account_id
             }
             transactions.append(trns)
-        return self.prepare_200_success_response(response_dict=transactions)
+        transactions_dict = {
+            'transactions': transactions
+        }
+        return self.prepare_200_success_response(response_dict=transactions_dict)
 
     def raise_invalid_age(self, *args, **kwargs):
         response_dict = {

@@ -16,7 +16,7 @@ def api_wrapper(*args, **kwargs):
 
     limit = query_params['limit']
     offset = query_params['offset']
-    sort_by = query_params['sortBy']
+    sort_by = query_params['sort_by']
     type = query_params['type'].upper()
 
     query_params_dto = GetAllTransactionsQueryParamsDTO(

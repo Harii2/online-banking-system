@@ -6,6 +6,9 @@ from banking.interactors.dtos import *
 
 class StorageInterface:
     @abstractmethod
+    def account_make_transaction(self, self_transaction_request_dto: SelfTransactionRequestDTO) :
+        pass
+    @abstractmethod
     def validate_debit_user_balance(self, account_id: int, amount: int):
         pass
 

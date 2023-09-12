@@ -46,9 +46,192 @@
         "response",
         "http_status_code"
       ]
+    },
+    "TransactionResponse": {
+      "type": "object",
+      "properties": {
+                  "transaction_id": {
+                    "type": "integer"
+                  },
+                  "transaction_type": {
+                    "type": "string"
+                  },
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "date_time": {
+                    "type": "string"
+                  },
+                  "to_account_id": {
+                    "type": "string"
+                  }
+                }
     }
   },
-  "parameters": {},
+  "parameters": {
+    "CreateBankRequest": {
+      "name": "requestBody",
+      "in": "body",
+      "description": "Create Bank Request",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "bank_name": {
+            "type": "string",
+            "enum": [
+                "SBI",
+                "UNION_BANK_OF_INDIA",
+                "ICIC"
+            ]
+          },
+          "ifsc_code": {
+            "type": "string"
+          },
+          "bank_manager_email": {
+            "type": "string"
+          },
+          "branch": {
+            "type": "string"
+          }
+        },
+        "required": [
+                "bank_name",
+                "ifsc_code",
+                "bank_manager_email",
+                "branch"
+        ]
+      }
+    },
+    "CreateBankAccountRequestPathParameters": {
+            "name": "bank_id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+    },
+    "CreateBankAccountRequestRequestBody": {
+            "name": "requestBody",
+            "in": "body",
+            "description": "The request body for creating a bank entity",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "age": {
+                  "type": "integer"
+                },
+                "mobile_number": {
+                  "type" : "string"
+                }
+              },
+              "required": [
+                "name",
+                "age",
+                "mobile_number"
+              ]
+            }
+          },
+    "GetAccountRequestPathParameters": {
+            "name": "account_id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+    },
+    "MakeTransactionPathParameters": {
+            "name": "requestBody",
+            "in": "body",
+            "description": "The request body for making a transaction",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "from_account_number": {
+                  "type": "integer"
+                },
+                "to_account_number": {
+                  "type": "integer"
+                },
+                "amount": {
+                  "type": "integer"
+                },
+                "transaction_type": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "from_account_number",
+                "to_account_number",
+                "amount",
+                "transaction_type"
+              ]
+            }
+          },
+    "AccountMakeTransactionPathParameters": {
+            "name": "requestBody",
+            "in": "body",
+            "description": "The request body for making a transaction",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "account_number": {
+                  "type": "integer"
+                },
+                "amount": {
+                  "type": "integer"
+                },
+                "transaction_type": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "account_number",
+                "amount",
+                "transaction_type"
+              ]
+            }
+          },
+    "AccountIdPathParameter": {
+            "name": "account_id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+    },
+    "LimitQueryParameter": {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "type": "integer"
+          },
+    "OffsetQueryParameter": {
+      "name": "offset",
+            "in": "query",
+            "required": true,
+            "type": "integer"
+    },
+    "SortByQueryParameter": {
+       "name": "sort_by",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "ASC",
+              "DESC"
+            ]
+      },
+    "TransactionTypeQueryParameter": {
+      "name": "type",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "credit",
+              "debit"
+            ]
+    }
+  },
   "responses": {
     "CreateBankAccountBadRequestResponse": {
       "description": "Create Bank Account Bad Request",
@@ -230,24 +413,7 @@
            "transactions": {
              "type": "array",
               "items": {
-                "type": "object",
-                "properties": {
-                  "transaction_id": {
-                    "type": "integer"
-                  },
-                  "transaction_type": {
-                    "type": "string"
-                  },
-                  "amount": {
-                    "type": "integer"
-                  },
-                  "date_time": {
-                    "type": "string"
-                  },
-                  "to_account_id": {
-                    "type": "string"
-                  }
-                }
+                 "$ref": "#/definitions/TransactionResponse"
               }
            }
          }
@@ -277,39 +443,13 @@
     }
   },
   "paths": {
-    "/bank/": {
+    "/bank/v1/": {
       "post": {
         "description": "Creating a new Bank",
         "operationId": "create_bank",
         "parameters": [
           {
-            "name": "requestBody",
-            "in": "body",
-            "description": "The request body for creating a bank entity",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "bank_name": {
-                  "type": "string"
-                },
-                "ifsc_code": {
-                  "type": "string"
-                },
-                "bank_manager_email": {
-                  "type": "string"
-                },
-                "branch": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "bank_name",
-                "ifsc_code",
-                "bank_manager_email",
-                "branch"
-              ]
-            }
+             "$ref": "#/parameters/CreateBankRequest"
           }
         ],
         "responses": {
@@ -322,41 +462,16 @@
         }
       }
     },
-    "/{bank_id}/account/create/": {
+    "/{bank_id}/account/create/v1/": {
       "post": {
         "operationId": "create_account",
         "description": "creating an account in the given bank name",
         "parameters": [
           {
-            "name": "bank_id",
-            "in": "path",
-            "required": true,
-            "type": "integer"
+            "$ref": "#/parameters/CreateBankAccountRequestPathParameters"
           },
           {
-            "name": "requestBody",
-            "in": "body",
-            "description": "The request body for creating a bank entity",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "age": {
-                  "type": "integer"
-                },
-                "mobile_number": {
-                  "type" : "string"
-                }
-              },
-              "required": [
-                "name",
-                "age",
-                "mobile_number"
-              ]
-            }
+            "$ref": "#/parameters/CreateBankAccountRequestRequestBody"
           }
         ],
         "responses": {
@@ -372,16 +487,13 @@
         }
       }
     },
-    "/account/{account_id}/": {
+    "/account/{account_id}/v1/": {
       "get": {
         "description": "Getting user account balance",
         "operationId": "get_account_balance",
         "parameters": [
           {
-            "name": "account_id",
-            "in": "path",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/GetAccountRequestPathParameters"
           }
         ],
         "responses": {
@@ -394,38 +506,13 @@
         }
       }
     },
-    "/bank/make_transaction/": {
+    "/bank/make_transaction/v1/": {
       "post": {
         "operationId": "make_transaction",
         "description": "Making transaction at bank level",
         "parameters": [
           {
-            "name": "requestBody",
-            "in": "body",
-            "description": "The request body for making a transaction",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "from_account_number": {
-                  "type": "integer"
-                },
-                "to_account_number": {
-                  "type": "integer"
-                },
-                "amount": {
-                  "type": "integer"
-                },
-                "transaction_type": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "from_account_number",
-                "to_account_number",
-                "amount"
-              ]
-            }
+            "$ref": "#/parameters/MakeTransactionPathParameters"
           }
         ],
         "responses": {
@@ -438,52 +525,52 @@
         }
       }
     },
-    "/account/{account_id}/transaction_history/": {
+    "/account/{account_id}/transaction_history/v1/": {
       "get": {
         "operationId": "get_all_transactions",
         "description": "Getting All Transaction of given account id",
         "parameters": [
           {
-            "name": "account_id",
-            "in": "path",
-            "required": true,
-            "type": "integer"
+            "$ref": "#/parameters/AccountIdPathParameter"
           },
           {
-            "name": "limit",
-            "in": "query",
-            "required": true,
-            "type": "integer"
+            "$ref": "#/parameters/LimitQueryParameter"
           },
           {
-            "name": "offset",
-            "in": "query",
-            "required": true,
-            "type": "integer"
+            "$ref": "#/parameters/OffsetQueryParameter"
           },
           {
-            "name": "sortBy",
-            "in": "query",
-            "required": true,
-            "type": "string"
+            "$ref": "#/parameters/SortByQueryParameter"
           },
           {
-            "name": "type",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "enum": [
-              "credit",
-              "debit"
-            ]
+            "$ref": "#/parameters/TransactionTypeQueryParameter"
           }
         ],
         "responses": {
-          "201": {
+          "200": {
             "$ref": "#/responses/GetTransactionHistoryValidResponse"
           },
           "400": {
            "$ref": "#/responses/GetTransactionHistoryBadRequestResponse"
+          }
+        }
+      }
+    },
+     "/account/make_transaction/v1/": {
+      "post": {
+        "operationId": "account_make_transaction",
+        "description": "Making transaction at bank level",
+        "parameters": [
+          {
+            "$ref": "#/parameters/AccountMakeTransactionPathParameters"
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/responses/MakeTransactionValidResponse"
+          },
+          "400": {
+            "$ref": "#/responses/MakeTransactionBadRequestResponse"
           }
         }
       }

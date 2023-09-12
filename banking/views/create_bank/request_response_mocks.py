@@ -2,7 +2,7 @@
 
 REQUEST_BODY_JSON = """
 {
-    "bank_name": "string",
+    "bank_name": "SBI",
     "ifsc_code": "string",
     "bank_manager_email": "string",
     "branch": "string"

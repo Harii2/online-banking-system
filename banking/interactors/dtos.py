@@ -60,3 +60,10 @@ class MakeTransactionResponseDTO:
     transaction_id: int
     amount_paid: int
     message: str
+
+
+@dataclass
+class SelfTransactionRequestDTO:
+    account_number: int
+    amount: int
+    transaction_type: str

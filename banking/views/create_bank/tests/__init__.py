@@ -4,7 +4,7 @@ APP_NAME = "banking"
 URL_BASE_PATH = "/api/"
 OPERATION_NAME = "create_bank"
 REQUEST_METHOD = "post"
-URL_SUFFIX = "bank/"
+URL_SUFFIX = "bank/v1/"
 
 
 from .test_case_01 import TestCase01CreateBankAPITestCase

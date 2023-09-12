@@ -10,6 +10,33 @@ from banking.interactors.dtos import *
 
 
 class StorageImplementation(StorageInterface):
+    def account_make_transaction(self, self_transaction_request_dto: SelfTransactionRequestDTO) -> MakeTransactionResponseDTO:
+        amount = self_transaction_request_dto.amount
+        account_number = self_transaction_request_dto.account_number
+        transaction_type = self_transaction_request_dto.transaction_type
+        make_transaction_response_dto = MakeTransactionResponseDTO(
+            transaction_id=0,
+            amount_paid=0,
+            message='None'
+        )
+        if transaction_type == 'CREDIT':
+            Account.objects.filter(pk=account_number).update(
+                balance=self.get_accountant_balance(account_id=account_number) + amount)
+            transaction = Transaction.objects.create(from_account_id_id=account_number, to_account_id_id=account_number,
+                                                     amount=amount, type=transaction_type)
+            make_transaction_response_dto.transaction_id = transaction.id
+            make_transaction_response_dto.amount_paid = transaction.amount
+            make_transaction_response_dto.message = 'SUCCESS'
+        if transaction_type == 'DEBIT':
+            Account.objects.filter(pk=account_number).update(
+                balance=self.get_accountant_balance(account_id=account_number) - amount)
+            transaction = Transaction.objects.create(from_account_id_id=account_number, to_account_id_id=account_number,
+                                                     amount=amount, type=transaction_type)
+            make_transaction_response_dto.transaction_id = transaction.id
+            make_transaction_response_dto.amount_paid = transaction.amount
+            make_transaction_response_dto.message = 'SUCCESS'
+        return make_transaction_response_dto
+
     def validate_debit_user_balance(self, account_id: int, amount: int):
         balance = Account.objects.get(pk=account_id).balance
         if balance < amount:
@@ -67,9 +94,8 @@ class StorageImplementation(StorageInterface):
         offset = query_params_dto.offset
         type = query_params_dto.type
         sort_by = query_params_dto.sort_by
-        if sort_by not in ['amount', 'type', 'date_time']:
-            sort_by = 'date_time'
-        transaction_history = Transaction.objects.filter(from_acc | to_acc).filter(type=type).order_by('-date_time')[
+        order_by = '-date_time' if sort_by == 'DESC' else 'date_time'
+        transaction_history = Transaction.objects.filter(from_acc | to_acc).filter(type=type).order_by(order_by)[
                               offset:offset + limit]
         transactions = []
         for transaction in transaction_history:
