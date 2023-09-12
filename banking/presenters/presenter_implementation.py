@@ -6,22 +6,29 @@ from banking.constants.exception_messages import *
 from typing import Dict
 from banking.interactors.dtos import *
 from django.http import HttpResponse
+from django_swagger_utils.utils.http_response_mixin import HTTPResponseMixin
+from banking.constants.enum import StatusCode
 
 
-class PresenterImplementation(PresenterInterface):
+class PresenterImplementation(PresenterInterface, HTTPResponseMixin):
     def get_make_transaction_response(self, make_transaction_response_dto: MakeTransactionResponseDTO) -> HttpResponse:
         transaction_id = make_transaction_response_dto.transaction_id
         amount_paid = make_transaction_response_dto.amount_paid
         message = make_transaction_response_dto.message
-        response = json.dumps({
+        response = {
             'transaction_id': transaction_id,
             'amount_paid': amount_paid,
             'message': message
-        })
-        return HttpResponse(response, status=201)
+        }
+        return self.prepare_201_created_response(response_dict=response)
 
     def raise_insufficient_balance(self, *args, **kwargs):
-        raise BadRequest(*INSUFFICIENT_BALANCE)
+        response_dict = {
+            "response": INSUFFICIENT_BALANCE[0],
+            "http_status_code": StatusCode.BAD_REQUEST.value,
+            "res_status": INSUFFICIENT_BALANCE[1],
+        }
+        raise self.prepare_400_bad_request_response(response_dict=response_dict)
 
     def raise_invalid_amount(self, *args, **kwargs):
         raise BadRequest(*INVALID_AMOUNT)

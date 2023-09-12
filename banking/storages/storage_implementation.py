@@ -127,7 +127,7 @@ class StorageImplementation(StorageInterface):
         )
         return bank.id
 
-    def is_valid_bank_id(self, bank_id: int):
+    def validate_bank_id(self, bank_id: int):
         is_exists = Bank.objects.filter(id=bank_id).exists()
         if not is_exists:
             raise BankNotExists

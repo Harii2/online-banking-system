@@ -1,32 +1,33 @@
-from banking.storages.storage_implementation import StorageImplementation
-from banking.presenters.presenter_implementation import PresenterImplementation
 from banking.exceptions.custom_exceptions import *
 from banking.interactors.dtos import CreateAccountRequestDTO
+from banking.interactors.storage_interfaces.storage_interface import StorageInterface
+from banking.presenters.presenter_implementation import PresenterImplementation
+
 
 class CreateBankInteractor:
 
-    def __init__(self, storage: StorageImplementation):
+    def __init__(self, storage: StorageInterface):
         self.storage = storage
 
-    def create_account(self, create_account_request_dto: CreateAccountRequestDTO, presenter: PresenterImplementation):
-        bank_id = create_account_request_dto.bank_id
+    def create_account_wrapper(
+            self, create_account_request_dto: CreateAccountRequestDTO,
+            presenter: PresenterImplementation
+    ):
         try:
-            self.storage.is_valid_bank_id(bank_id)
+            account_number = self.create_account(create_account_request_dto=create_account_request_dto)
         except BankNotExists:
-            presenter.raise_bank_not_exists()
-            return
-
-        try:
-            self.storage.validate_user_details(create_account_request_dto)
+            return presenter.raise_bank_not_exists()
         except InvalidAccountantName:
-            presenter.raise_invalid_user_name()
-            return
+            return presenter.raise_invalid_user_name()
         except InvalidAge:
-            presenter.raise_invalid_age()
+            return presenter.raise_invalid_age()
         except InvalidMobileNumber:
-            presenter.raise_invalid_mobile_number()
-            return
+            return presenter.raise_invalid_mobile_number()
+        else:
+            return presenter.get_create_account_response(account_number=account_number)
 
+    def create_account(self, create_account_request_dto: CreateAccountRequestDTO) -> int:
+        self.storage.validate_bank_id(bank_id=create_account_request_dto.bank_id)
+        self.storage.validate_user_details(create_account_request_dto)
         account_number = self.storage.create_account(create_account_request_dto)
-        account_number_dict = presenter.get_create_account_response(account_number)
-        return account_number_dict
+        return account_number

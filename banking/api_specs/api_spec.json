@@ -31,9 +31,62 @@
       "type": "oauth2"
     }
   },
-  "definitions": {},
+  "definitions": {
+    "CommonHttpExceptionResponse": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "string"
+        },
+        "http_status_code": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "response",
+        "http_status_code"
+      ]
+    }
+  },
   "parameters": {},
-  "responses": {},
+  "responses": {
+    "CreateBankAccountBadRequestResponse": {
+      "description": "Create Bank Account Bad Request",
+      "schema": {
+        "allOf": [
+        {
+          "$ref": "#/definitions/CommonHttpExceptionResponse"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "res_status": {
+              "type": "string",
+              "enum": [
+                "INSUFFICIENT_BALANCE",
+                "INVALID_AMOUNT"
+              ]
+            }
+          }
+        }
+      ]
+      }
+    },
+    "CreateBankAccountValidResponse": {
+      "description": "SUCCESSFULLY CREATED",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "account_number": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "account_number"
+              ]
+            }
+    }
+  },
   "paths": {
     "/bank/": {
       "post": {
@@ -144,18 +197,10 @@
         ],
         "responses": {
           "201": {
-            "description": "SUCCESSFULLY CREATED",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "account_number": {
-                  "type": "integer"
-                }
-              },
-              "required": [
-                "account_number"
-              ]
-            }
+            "$ref": "#/responses/CreateBankAccountValidResponse"
+          },
+          "400": {
+            "$ref": "#/responses/CreateBankAccountBadRequestResponse"
           },
           "401": {
             "description": "Invalid Details",

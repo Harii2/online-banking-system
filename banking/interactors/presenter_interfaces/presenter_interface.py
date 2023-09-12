@@ -5,8 +5,9 @@ from django.http import HttpResponse
 
 class PresenterInterface:
     @abstractmethod
-    def get_make_transaction_response(self, make_transaction_response_dto: MakeTransactionResponseDTO) -> HttpResponse:
+    def get_make_transaction_response(self, make_transaction_response_dto: MakeTransactionResponseDTO):
         pass
+
     @abstractmethod
     def raise_insufficient_balance(self, *args, **kwargs):
         pass
@@ -16,11 +17,11 @@ class PresenterInterface:
         pass
 
     @abstractmethod
-    def get_transaction_history_response(self, transaction_history: TransactionHistoryResponseDTO) -> HttpResponse:
+    def get_transaction_history_response(self, transaction_history: TransactionHistoryResponseDTO):
         pass
 
     @abstractmethod
-    def get_account_balance_response(self, balance: int) -> dict:
+    def get_account_balance_response(self, balance: int):
         pass
 
     @abstractmethod
