@@ -31,8 +31,6 @@ def api_wrapper(*args, **kwargs):
     presenter = PresenterImplementation()
     interactor = CreateBankInteractor(storage=storage)
 
-    response = interactor.create_account(
-        create_account_request_dto=create_account_request_dto,
-        presenter=presenter
-    )
+    response = interactor.create_account_wrapper(create_account_request_dto=create_account_request_dto,
+                                                 presenter=presenter)
     return response

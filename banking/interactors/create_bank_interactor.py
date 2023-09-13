@@ -2,6 +2,7 @@ from banking.interactors.storage_interfaces.storage_interface import StorageInte
 from banking.presenters.presenter_implementation import PresenterImplementation
 from banking.exceptions.custom_exceptions import *
 from .dtos import CreateBankRequestDTO
+from typing import Tuple
 
 
 class CreateBankInteractor:
@@ -9,10 +10,10 @@ class CreateBankInteractor:
     def __init__(self, storage: StorageInterface):
         self.storage = storage
 
-    def create_bank(self, create_bank_request_dto: CreateBankRequestDTO,
-                    presenter: PresenterImplementation):
+    def create_bank_wrapper(self, create_bank_request_dto: CreateBankRequestDTO,
+                            presenter: PresenterImplementation):
         try:
-            bank_id, manager_id = self.create_bank_wrapper(create_bank_request_dto=create_bank_request_dto)
+            bank_id, manager_id = self.create_bank(create_bank_request_dto=create_bank_request_dto)
         except IFSCCodeAlreadyExists:
             return presenter.raise_ifsc_code_already_exists()
         except ManagerEmailAlreadyExists:
@@ -20,7 +21,7 @@ class CreateBankInteractor:
         else:
             return presenter.get_create_bank_response(bank_id=bank_id, manager_id=manager_id)
 
-    def create_bank_wrapper(self, create_bank_request_dto: CreateBankRequestDTO) -> tuple[int, int]:
+    def create_bank(self, create_bank_request_dto: CreateBankRequestDTO) -> Tuple[int, int]:
         ifsc_code = create_bank_request_dto.ifsc_code
         bank_manager_email = create_bank_request_dto.bank_manager_email
         self.storage.validate_ifsc_code(ifsc_code=ifsc_code)

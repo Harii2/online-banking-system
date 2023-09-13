@@ -230,6 +230,26 @@
               "credit",
               "debit"
             ]
+    },
+    "UpdateAccountBalanceRequestRequestBody": {
+      "name": "requestBody",
+      "in": "body",
+      "required": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "age": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "name",
+          "age"
+        ]
+      }
     }
   },
   "responses": {
@@ -436,7 +456,69 @@
                 "INVALID_AMOUNT"
               ]
             }
+          },
+          "required": [
+            "res_status"
+          ]
+        }
+      ]
+      }
+    },
+    "UpdateAccountBalanceValidResponse": {
+      "description": "SUCCESSFULLY UPDATED ",
+      "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+      }
+    },
+    "UpdateAccountBalanceBadRequestResponse": {
+      "description": "Update Account Balance Bad Response",
+      "schema": {
+        "allOf": [
+        {
+          "$ref": "#/definitions/CommonHttpExceptionResponse"
+        }
+        ],
+        "type": "object",
+        "properties": {
+          "res_status": {
+            "type": "string",
+            "enum": [
+              "INVALID_ACCOUNT_ID",
+              "INVALID_USER_NAME",
+              "INVALID_AGE"
+            ]
           }
+        },
+        "required": [
+          "res_status"
+        ]
+      }
+    },
+    "DeleteAccountBadRequestResponse": {
+      "description": "Delete Account Bad Response",
+      "schema": {
+        "allOf": [
+        {
+          "$ref": "#/definitions/CommonHttpExceptionResponse"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "res_status": {
+              "type": "string",
+              "enum": [
+                "INVALID_ACCOUNT_ID"
+              ]
+            }
+          },
+          "required": [
+            "res_status"
+          ]
         }
       ]
       }
@@ -502,6 +584,43 @@
           },
           "400": {
             "$ref": "#/responses/GetAccountBadRequestResponse"
+          }
+        }
+      },
+      "patch": {
+        "description": "Updating user account balance",
+        "operationId": "update_account",
+        "parameters": [
+          {
+            "$ref": "#/parameters/GetAccountRequestPathParameters"
+          },
+          {
+            "$ref": "#/parameters/UpdateAccountBalanceRequestRequestBody"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/UpdateAccountBalanceValidResponse"
+          },
+          "400": {
+            "$ref": "#/responses/UpdateAccountBalanceBadRequestResponse"
+          }
+        }
+      },
+       "delete": {
+        "description": "Updating user account balance",
+        "operationId": "delete_account",
+        "parameters": [
+          {
+            "$ref": "#/parameters/GetAccountRequestPathParameters"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/UpdateAccountBalanceValidResponse"
+          },
+          "400": {
+            "$ref": "#/responses/DeleteAccountBadRequestResponse"
           }
         }
       }

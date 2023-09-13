@@ -30,4 +30,4 @@ def api_wrapper(*args, **kwargs):
     storage = StorageImplementation()
     presenter = PresenterImplementation()
     interactor = GetTransactionHistoryInteractor(storage=storage)
-    return interactor.get_transaction_history(account_id=account_id, query_params_dto=query_params_dto, presenter=presenter)
+    return interactor.get_transaction_history_wrapper(account_id=account_id, query_params_dto=query_params_dto, presenter=presenter)

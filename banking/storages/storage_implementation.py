@@ -10,7 +10,22 @@ from banking.interactors.dtos import *
 
 
 class StorageImplementation(StorageInterface):
-    def account_make_transaction(self, self_transaction_request_dto: SelfTransactionRequestDTO) -> MakeTransactionResponseDTO:
+    def delete_account(self, account_id: int):
+        account = Account.objects.get(pk=account_id)
+        counts = account.delete()
+        return "Deleted Succesfully"
+
+    def update_account_details(self, update_account_dto: UpdateAccountRequestDTO) -> bool:
+        account_id = update_account_dto.account_id
+        name = update_account_dto.name
+        age = update_account_dto.age
+        updated = Account.objects.filter(pk=account_id).update(
+            name=name,
+            age=age
+        )
+        return updated
+    def account_make_transaction(self,
+                                 self_transaction_request_dto: SelfTransactionRequestDTO) -> MakeTransactionResponseDTO:
         amount = self_transaction_request_dto.amount
         account_number = self_transaction_request_dto.account_number
         transaction_type = self_transaction_request_dto.transaction_type
@@ -157,16 +172,25 @@ class StorageImplementation(StorageInterface):
         if not is_exists:
             raise BankNotExists
 
+    def validate_user_name(self, name: str):
+        if name.strip() == "":
+            raise InvalidAccountantName
+
+    def validate_user_age(self, age: int):
+        if age < 8:
+            raise InvalidAge
+
+    def validate_user_mobile_number(self, mobile_number: str):
+        if mobile_number.strip() == "" or len(mobile_number) != 10:
+            raise InvalidMobileNumber
+
     def validate_user_details(self, create_account_request_dto: CreateAccountRequestDTO):
         name = create_account_request_dto.name
         age = create_account_request_dto.age
         mobile_number = create_account_request_dto.mobile_number
-        if name.strip() == "":
-            raise InvalidAccountantName
-        if age < 8:
-            raise InvalidAge
-        if mobile_number.strip() == "" or len(mobile_number) != 10:
-            raise InvalidMobileNumber
+        self.validate_user_name(name=name)
+        self.validate_user_age(age=age)
+        self.validate_user_mobile_number(mobile_number=mobile_number)
 
     def create_account(self, create_account_request_dto: CreateAccountRequestDTO) -> int:
         name = create_account_request_dto.name

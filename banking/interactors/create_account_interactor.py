@@ -9,12 +9,12 @@ class CreateBankInteractor:
     def __init__(self, storage: StorageInterface):
         self.storage = storage
 
-    def create_account(
+    def create_account_wrapper(
             self, create_account_request_dto: CreateAccountRequestDTO,
             presenter: PresenterImplementation
     ):
         try:
-            account_number = self.create_account_wrapper(create_account_request_dto=create_account_request_dto)
+            account_number = self.create_account(create_account_request_dto=create_account_request_dto)
         except BankNotExists:
             return presenter.raise_bank_not_exists()
         except InvalidAccountantName:
@@ -26,7 +26,7 @@ class CreateBankInteractor:
         else:
             return presenter.get_create_account_response(account_number=account_number)
 
-    def create_account_wrapper(self, create_account_request_dto: CreateAccountRequestDTO) -> int:
+    def create_account(self, create_account_request_dto: CreateAccountRequestDTO) -> int:
         bank_id = create_account_request_dto.bank_id
         self.storage.validate_bank_id(bank_id=bank_id)
         self.storage.validate_user_details(create_account_request_dto=create_account_request_dto)

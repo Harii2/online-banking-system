@@ -3,13 +3,16 @@ from banking.presenters.presenter_implementation import PresenterImplementation
 from banking.interactors.dtos import SelfTransactionRequestDTO
 from banking.exceptions.custom_exceptions import *
 
+
 class AccountMakeTransaction:
     def __init__(self, storage: StorageInterface):
         self.storage = storage
 
-    def account_make_transaction_wrapper(self, self_transaction_request_dto: SelfTransactionRequestDTO, presenter: PresenterImplementation):
+    def account_make_transaction_wrapper(self, self_transaction_request_dto: SelfTransactionRequestDTO,
+                                         presenter: PresenterImplementation):
         try:
-            make_transaction_response_dto = self.account_make_transaction(self_transaction_request_dto=self_transaction_request_dto)
+            make_transaction_response_dto = self.account_make_transaction(
+                self_transaction_request_dto=self_transaction_request_dto)
         except InvalidAccountId:
             return presenter.raise_invalid_account_id()
         except InvalidAmount:

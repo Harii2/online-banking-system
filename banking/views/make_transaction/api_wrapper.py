@@ -21,4 +21,4 @@ def api_wrapper(*args, **kwargs):
         amount=request_body['amount'],
         transaction_type=request_body['transaction_type'].upper()
     )
-    return interactor.make_transaction(make_transaction_dto=make_transaction_dto, presenter=presenter)
+    return interactor.make_transaction_wrapper(make_transaction_dto=make_transaction_dto, presenter=presenter)

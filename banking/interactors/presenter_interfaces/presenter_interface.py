@@ -5,6 +5,12 @@ from django.http import HttpResponse
 
 class PresenterInterface:
     @abstractmethod
+    def get_delete_account_response(self, deleted: str):
+        pass
+    @abstractmethod
+    def get_update_account_response(self, updated: bool):
+        pass
+    @abstractmethod
     def get_make_transaction_response(self, make_transaction_response_dto: MakeTransactionResponseDTO):
         pass
 
@@ -51,9 +57,6 @@ class PresenterInterface:
     def raise_bank_not_exists(self, *args, **kwargs):
         pass
 
-    @abstractmethod
-    def raise_invalid_user_details(self, *args, **kwargs):
-        pass
 
     @abstractmethod
     def get_create_account_response(self, account_number: int) -> dict:

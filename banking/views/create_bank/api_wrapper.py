@@ -27,7 +27,4 @@ def api_wrapper(*args, **kwargs):
         bank_manager_email=bank_manager_email,
         branch=branch
     )
-    return interactor.create_bank(
-        create_bank_request_dto=create_bank_request_dto,
-        presenter=presenter
-    )
+    return interactor.create_bank_wrapper(create_bank_request_dto=create_bank_request_dto, presenter=presenter)

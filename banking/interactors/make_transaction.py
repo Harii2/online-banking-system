@@ -8,9 +8,9 @@ class MakeTransaction:
     def __init__(self, storage: StorageImplementation):
         self.storage = storage
 
-    def make_transaction(self, make_transaction_dto: MakeTransactionDTO, presenter: PresenterImplementation):
+    def make_transaction_wrapper(self, make_transaction_dto: MakeTransactionDTO, presenter: PresenterImplementation):
         try:
-            make_transaction_response_dto = self.make_transaction_wrapper(make_transaction_dto=make_transaction_dto)
+            make_transaction_response_dto = self.make_transaction(make_transaction_dto=make_transaction_dto)
         except InvalidAccountId:
             return presenter.raise_invalid_account_id()
         except InvalidAmount:
@@ -20,7 +20,7 @@ class MakeTransaction:
         else:
             return presenter.get_make_transaction_response(make_transaction_response_dto=make_transaction_response_dto)
 
-    def make_transaction_wrapper(self, make_transaction_dto: MakeTransactionDTO):
+    def make_transaction(self, make_transaction_dto: MakeTransactionDTO):
         from_account_number = make_transaction_dto.from_account_number
         to_account_number = make_transaction_dto.to_account_number
         amount = make_transaction_dto.amount

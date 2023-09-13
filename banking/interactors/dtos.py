@@ -67,3 +67,10 @@ class SelfTransactionRequestDTO:
     account_number: int
     amount: int
     transaction_type: str
+
+
+@dataclass
+class UpdateAccountRequestDTO:
+    account_id: int
+    name: str
+    age: int

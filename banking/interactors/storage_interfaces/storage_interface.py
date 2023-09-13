@@ -6,6 +6,12 @@ from banking.interactors.dtos import *
 
 class StorageInterface:
     @abstractmethod
+    def delete_account(self, account_id: int):
+        pass
+    @abstractmethod
+    def update_account_details(self, update_account_dto: UpdateAccountRequestDTO):
+        pass
+    @abstractmethod
     def account_make_transaction(self, self_transaction_request_dto: SelfTransactionRequestDTO) :
         pass
     @abstractmethod
@@ -55,6 +61,18 @@ class StorageInterface:
 
     @abstractmethod
     def validate_user_details(self, create_account_request_dto: CreateAccountRequestDTO):
+        pass
+
+    @abstractmethod
+    def validate_user_name(self, name: str):
+        pass
+
+    @abstractmethod
+    def validate_user_age(self, age: int):
+        pass
+
+    @abstractmethod
+    def validate_user_mobile_number(self, mobile_number: str):
         pass
 
     @abstractmethod

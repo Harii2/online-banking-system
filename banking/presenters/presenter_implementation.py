@@ -11,6 +11,18 @@ from banking.constants.enum import StatusCode
 
 
 class PresenterImplementation(PresenterInterface, HTTPResponseMixin):
+    def get_delete_account_response(self, deleted: str):
+        response_dict = {
+            "message": deleted
+        }
+        return self.prepare_200_success_response(response_dict=response_dict)
+
+    def get_update_account_response(self, updated: bool):
+        response_dict = {
+            "message": f'UPDATED' if updated else 'NOT UPDATED'
+        }
+        return self.prepare_200_success_response(response_dict=response_dict)
+
     def get_make_transaction_response(self, make_transaction_response_dto: MakeTransactionResponseDTO) -> HttpResponse:
         transaction_id = make_transaction_response_dto.transaction_id
         amount_paid = make_transaction_response_dto.amount_paid
@@ -38,7 +50,8 @@ class PresenterImplementation(PresenterInterface, HTTPResponseMixin):
         }
         return self.prepare_400_bad_request_response(response_dict=response_dict)
 
-    def get_transaction_history_response(self, transaction_history_response_dto: TransactionHistoryResponseDTO) -> HttpResponse:
+    def get_transaction_history_response(self,
+                                         transaction_history_response_dto: TransactionHistoryResponseDTO) -> HttpResponse:
         print(transaction_history_response_dto.transaction_history)
         transactions = []
         for transaction in transaction_history_response_dto.transaction_history:
@@ -116,7 +129,7 @@ class PresenterImplementation(PresenterInterface, HTTPResponseMixin):
         }
         return self.prepare_404_not_found_response(response_dict=response_dict)
 
-    def get_create_bank_response(self, bank_id: int, manager_id: int) :
+    def get_create_bank_response(self, bank_id: int, manager_id: int):
         create_bank_response = {
             'bank_id': bank_id,
             'manager_id': manager_id
