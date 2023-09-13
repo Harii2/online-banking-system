@@ -110,7 +110,6 @@ class PresenterImplementation(PresenterInterface, HTTPResponseMixin):
             "http_status_code": StatusCode.BAD_REQUEST.value,
             "res_status": INVALID_IFSC_CODE[1],
         }
-        print(response_dict)
         return self.prepare_400_bad_request_response(response_dict=response_dict)
 
     def raise_manager_email_already_exists(self, *args, **kwargs):
