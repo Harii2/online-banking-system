@@ -1,16 +1,18 @@
 """
-# Bank Not Exists
+# Created Account Succesfully
 """
+import json
 
 from django_swagger_utils.utils.test import CustomAPITestCase
 
-from banking.tests.factories.models import BankFactory, AccountFactory
+from banking.models import Account
+from banking.tests.factories.models import BankFactory
 from . import APP_NAME, OPERATION_NAME, REQUEST_METHOD, URL_SUFFIX
 
 REQUEST_BODY = """
 {
     "name": "Ramu",
-    "age": 1,
+    "age": 20,
     "mobile_number": "9998886660"
 }
 """
@@ -36,6 +38,17 @@ class TestCase01CreateAccountAPITestCase(CustomAPITestCase):
     test_case_dict = TEST_CASE
 
     def test_case(self):
+        # Arrange
+        BankFactory(id=1234)
+
         # Assert
-        self.default_test_case()
+        response = self.default_test_case()
+        response_data = json.loads(response.content)
+        account_number = response_data['account_number']
+        account = Account.objects.get(id=account_number)
+        account.name = 'Ramu'
+        account.age = 20
+        account.mobile_number = '9998886660'
+
+
 

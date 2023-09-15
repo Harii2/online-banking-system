@@ -3,7 +3,7 @@ from banking.presenters.presenter_implementation import PresenterImplementation
 from banking.exceptions.custom_exceptions import *
 
 
-class DeleteAccount:
+class DeleteAccountInteractor:
     def __init__(self, storage: StorageInterface):
         self.storage = storage
 

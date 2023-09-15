@@ -1,5 +1,5 @@
 # from banking.interactors.dtos import CreateAccountRequestDTO, CreateBankRequestDTO, GetAllTransactionsQueryParamsDTO, \
-#     TransactionHistoryResponseDTO, MakeTransactionDTO, MakeTransactionResponseDTO
+#     TransactionHistoryResponseDTO, MakeTransactionRequestDTO, MakeTransactionResponseDTO
 # from banking.interactors.storage_interfaces.storage_interface import StorageInterface
 #
 #
@@ -7,7 +7,7 @@
 #     def validate_debit_user_balance(self, account_id: int, amount: int):
 #         pass
 #
-#     def make_transaction(self, make_transaction_dto: MakeTransactionDTO) -> MakeTransactionResponseDTO:
+#     def make_transaction(self, make_transaction_dto: MakeTransactionRequestDTO) -> MakeTransactionResponseDTO:
 #         pass
 #
 #     def validate_amount(self, amount: int):

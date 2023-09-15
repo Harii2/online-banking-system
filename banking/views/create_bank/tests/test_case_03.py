@@ -1,10 +1,11 @@
 """
-# Invalid IFSC code
+# Succesfully created Bank
 """
+import json
 
 from django_swagger_utils.utils.test import CustomAPITestCase
 
-from banking.tests.factories.models import BankFactory
+from banking.models import Bank, Staff
 from . import APP_NAME, OPERATION_NAME, REQUEST_METHOD, URL_SUFFIX
 
 REQUEST_BODY = """
@@ -27,7 +28,7 @@ TEST_CASE = {
 }
 
 
-class TestCase01CreateBankAPITestCase(CustomAPITestCase):
+class TestCase03CreateBankAPITestCase(CustomAPITestCase):
     app_name = APP_NAME
     operation_name = OPERATION_NAME
     request_method = REQUEST_METHOD
@@ -35,10 +36,25 @@ class TestCase01CreateBankAPITestCase(CustomAPITestCase):
     test_case_dict = TEST_CASE
 
     def test_case(self):
-        # Arrange
-        BankFactory(ifsc_code="SBI00001")
         # Act
-        self.default_test_case()
+        response = self.default_test_case()
+
+        # Assert
+        response_data = json.loads(response.content)
+        bank_id = response_data['bank_id']
+        manager_id = response_data['manager_id']
+
+        bank = Bank.objects.get(id=bank_id)
+        manager = Staff.objects.get(id=manager_id)
+
+        assert bank.name == 'SBI'
+        assert bank.ifsc_code == "SBI00001"
+        assert bank.branch == 'ALLAGADDA'
+        assert manager.email == "sbibankmanager01@gamil.com"
+
+
+
+
 
 
 

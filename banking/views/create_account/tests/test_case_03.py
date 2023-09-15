@@ -1,5 +1,5 @@
 """
-# Invalid IFSC code
+# Invalid Mobile Number
 """
 
 from django_swagger_utils.utils.test import CustomAPITestCase
@@ -9,16 +9,17 @@ from . import APP_NAME, OPERATION_NAME, REQUEST_METHOD, URL_SUFFIX
 
 REQUEST_BODY = """
 {
-    "bank_name": "SBI",
-    "ifsc_code": "SBI00001",
-    "bank_manager_email": "sbibankmanager01@gamil.com",
-    "branch":"ALLAGADDA"
+    "name": "Ramu",
+    "age": 20,
+    "mobile_number": "123456789"
 }
 """
 
 TEST_CASE = {
     "request": {
-        "path_params": {},
+        "path_params": {
+            "bank_id": "1234"
+        },
         "query_params": {},
         "header_params": {},
         "securities": {},
@@ -27,7 +28,7 @@ TEST_CASE = {
 }
 
 
-class TestCase01CreateBankAPITestCase(CustomAPITestCase):
+class TestCase01CreateAccountAPITestCase(CustomAPITestCase):
     app_name = APP_NAME
     operation_name = OPERATION_NAME
     request_method = REQUEST_METHOD
@@ -36,10 +37,8 @@ class TestCase01CreateBankAPITestCase(CustomAPITestCase):
 
     def test_case(self):
         # Arrange
-        BankFactory(ifsc_code="SBI00001")
-        # Act
+        BankFactory(id=1234)
+
+        # Assert
         self.default_test_case()
-
-
-
 

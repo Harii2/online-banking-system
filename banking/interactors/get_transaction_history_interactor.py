@@ -13,11 +13,9 @@ class GetTransactionHistoryInteractor:
         try:
             transaction_history_response_dto = self.get_transaction_history(account_id=account_id, query_params_dto=query_params_dto)
         except InvalidAccountId:
-            presenter.raise_invalid_account_id()
-            return
+            return presenter.raise_invalid_account_id()
         else:
-            transaction_history = presenter.get_transaction_history_response(transaction_history_response_dto=transaction_history_response_dto)
-            return transaction_history
+            return presenter.get_transaction_history_response(transaction_history_response_dto=transaction_history_response_dto)
 
     def get_transaction_history(self, account_id: int, query_params_dto: GetAllTransactionsQueryParamsDTO) -> TransactionHistoryResponseDTO:
         self.storage.validate_account_id(account_id=account_id)

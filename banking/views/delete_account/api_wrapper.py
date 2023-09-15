@@ -4,7 +4,7 @@ from .validator_class import ValidatorClass
 
 from banking.storages.storage_implementation import StorageImplementation
 from banking.presenters.presenter_implementation import PresenterImplementation
-from banking.interactors.delete_account import DeleteAccount
+from banking.interactors.delete_account import DeleteAccountInteractor
 
 @validate_decorator(validator_class=ValidatorClass)
 def api_wrapper(*args, **kwargs):
@@ -13,6 +13,6 @@ def api_wrapper(*args, **kwargs):
     account_id = path_params['account_id']
     storage = StorageImplementation()
     presenter = PresenterImplementation()
-    interactor = DeleteAccount(storage=storage)
+    interactor = DeleteAccountInteractor(storage=storage)
     return interactor.delete_account_wrapper(account_id=account_id, presenter=presenter)
 

@@ -1,21 +1,25 @@
 """
-# TODO: Update test case description
+# Invalid Age
 """
 
 from django_swagger_utils.utils.test import CustomAPITestCase
+
+from banking.tests.factories.models import BankFactory
 from . import APP_NAME, OPERATION_NAME, REQUEST_METHOD, URL_SUFFIX
 
 REQUEST_BODY = """
 {
-    "to_account_number": 1,
-    "amount": 1,
-    "transaction_type": "string"
+    "name": "Ramu",
+    "age": 2,
+    "mobile_number": "1234567890"
 }
 """
 
 TEST_CASE = {
     "request": {
-        "path_params": {},
+        "path_params": {
+            "bank_id": "1234"
+        },
         "query_params": {},
         "header_params": {},
         "securities": {},
@@ -24,7 +28,7 @@ TEST_CASE = {
 }
 
 
-class TestCase01AccountMakeTransactionAPITestCase(CustomAPITestCase):
+class TestCase01CreateAccountAPITestCase(CustomAPITestCase):
     app_name = APP_NAME
     operation_name = OPERATION_NAME
     request_method = REQUEST_METHOD
@@ -32,6 +36,9 @@ class TestCase01AccountMakeTransactionAPITestCase(CustomAPITestCase):
     test_case_dict = TEST_CASE
 
     def test_case(self):
-        self.default_test_case()  # Returns response object.
-        # Which can be used for further response object checks.
-        # Add database state checks here.
+        # Arrange
+        BankFactory(id=1234)
+
+        # Assert
+        self.default_test_case()
+

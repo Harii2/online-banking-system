@@ -4,8 +4,8 @@ from .validator_class import ValidatorClass
 import json
 from banking.storages.storage_implementation import StorageImplementation
 from banking.presenters.presenter_implementation import PresenterImplementation
-from banking.interactors.make_transaction import MakeTransaction
-from banking.interactors.dtos import MakeTransactionDTO
+from banking.interactors.make_transaction import MakeTransactionInteractor
+from banking.interactors.dtos import MakeTransactionRequestDTO
 
 
 @validate_decorator(validator_class=ValidatorClass)
@@ -14,8 +14,8 @@ def api_wrapper(*args, **kwargs):
     request_body = kwargs['request_data']
     storage = StorageImplementation()
     presenter = PresenterImplementation()
-    interactor = MakeTransaction(storage=storage)
-    make_transaction_dto = MakeTransactionDTO(
+    interactor = MakeTransactionInteractor(storage=storage)
+    make_transaction_dto = MakeTransactionRequestDTO(
         from_account_number=request_body['from_account_number'],
         to_account_number=request_body['to_account_number'],
         amount=request_body['amount'],

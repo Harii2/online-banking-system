@@ -52,15 +52,14 @@ class PresenterImplementation(PresenterInterface, HTTPResponseMixin):
 
     def get_transaction_history_response(self,
                                          transaction_history_response_dto: TransactionHistoryResponseDTO) -> HttpResponse:
-        print(transaction_history_response_dto.transaction_history)
         transactions = []
         for transaction in transaction_history_response_dto.transaction_history:
             trns = {
                 'transaction_id': transaction.transaction_id,
                 'transaction_type': transaction.transaction_type,
                 'amount': transaction.amount,
-                'date_time': transaction.date_time,
-                'to_account_id': transaction.to_account_id
+                'date_time': transaction.date_time.strftime("%d-%m-%Y %H:%M:%S"),
+                'account_id': transaction.account_id
             }
             transactions.append(trns)
         transactions_dict = {
@@ -92,7 +91,7 @@ class PresenterImplementation(PresenterInterface, HTTPResponseMixin):
         }
         return self.prepare_400_bad_request_response(response_dict=response_dict)
 
-    def get_account_balance_response(self, balance: int) -> Dict[str, int]:
+    def get_account_balance_response(self, balance: int) :
         balance_dict = {'balance': balance}
         return self.prepare_200_success_response(response_dict=balance_dict)
 

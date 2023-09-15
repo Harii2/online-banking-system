@@ -9,7 +9,7 @@ RESPONSE_200_JSON = """
             "transaction_type": "string",
             "amount": 1,
             "date_time": "string",
-            "to_account_id": "string"
+            "account_id": "string"
         }
     ]
 }

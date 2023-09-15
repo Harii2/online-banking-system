@@ -19,7 +19,7 @@ class StorageInterface:
         pass
 
     @abstractmethod
-    def make_transaction(self, make_transaction_dto: MakeTransactionDTO) -> MakeTransactionResponseDTO:
+    def make_transaction(self, make_transaction_dto: MakeTransactionRequestDTO) -> MakeTransactionResponseDTO:
         pass
 
     @abstractmethod

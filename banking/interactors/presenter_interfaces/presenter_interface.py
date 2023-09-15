@@ -23,7 +23,7 @@ class PresenterInterface:
         pass
 
     @abstractmethod
-    def get_transaction_history_response(self, transaction_history: TransactionHistoryResponseDTO):
+    def get_transaction_history_response(self, transaction_history_response_dto: TransactionHistoryResponseDTO):
         pass
 
     @abstractmethod

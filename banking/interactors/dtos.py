@@ -30,8 +30,8 @@ class TransactionDTO:
     transaction_id: int
     transaction_type: int
     amount: int
-    date_time: datetime.datetime
-    to_account_id: int
+    date_time: datetime
+    account_id: int
 
 
 @dataclass
@@ -40,7 +40,7 @@ class TransactionHistoryResponseDTO:
 
 
 @dataclass
-class MakeTransactionDTO:
+class MakeTransactionRequestDTO:
     from_account_number: int
     to_account_number: int
     amount: int
@@ -52,7 +52,7 @@ class GetAllTransactionsQueryParamsDTO:
     limit: int = 100
     offset: int = 0
     sort_by: str = "date_time"
-    type: str = "CREDIT"
+    type: str = "DEBIT"
 
 
 @dataclass

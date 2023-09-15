@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('type', models.CharField(choices=[('DEBIT', 'DEBIT'), ('CREDIT', 'CREDIT')], max_length=255)),
                 ('date_time', models.DateTimeField(auto_now_add=True)),
                 ('from_account_id', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, related_name='from_account_id', to='banking.Account')),
-                ('to_account_id', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, related_name='to_account_id', to='banking.Account')),
+                ('account_id', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, related_name='account_id', to='banking.Account')),
             ],
         ),
     ]

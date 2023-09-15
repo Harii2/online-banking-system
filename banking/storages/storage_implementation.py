@@ -7,6 +7,7 @@ from banking.interactors.dtos import CreateAccountRequestDTO
 from django.db.models import Q
 from banking.interactors.dtos import TransactionDTO, TransactionHistoryResponseDTO
 from banking.interactors.dtos import *
+from django.db import connection
 
 
 class StorageImplementation(StorageInterface):
@@ -24,6 +25,7 @@ class StorageImplementation(StorageInterface):
             age=age
         )
         return updated
+
     def account_make_transaction(self,
                                  self_transaction_request_dto: SelfTransactionRequestDTO) -> MakeTransactionResponseDTO:
         amount = self_transaction_request_dto.amount
@@ -42,6 +44,7 @@ class StorageImplementation(StorageInterface):
             make_transaction_response_dto.transaction_id = transaction.id
             make_transaction_response_dto.amount_paid = transaction.amount
             make_transaction_response_dto.message = 'SUCCESS'
+            return make_transaction_response_dto
         if transaction_type == 'DEBIT':
             Account.objects.filter(pk=account_number).update(
                 balance=self.get_accountant_balance(account_id=account_number) - amount)
@@ -50,14 +53,14 @@ class StorageImplementation(StorageInterface):
             make_transaction_response_dto.transaction_id = transaction.id
             make_transaction_response_dto.amount_paid = transaction.amount
             make_transaction_response_dto.message = 'SUCCESS'
-        return make_transaction_response_dto
+            return make_transaction_response_dto
 
     def validate_debit_user_balance(self, account_id: int, amount: int):
         balance = Account.objects.get(pk=account_id).balance
         if balance < amount:
             raise InsufficientBalance
 
-    def make_transaction(self, make_transaction_dto: MakeTransactionDTO) -> MakeTransactionResponseDTO:
+    def make_transaction(self, make_transaction_dto: MakeTransactionRequestDTO) -> MakeTransactionResponseDTO:
         amount = make_transaction_dto.amount
         from_account_number = make_transaction_dto.from_account_number
         to_account_number = make_transaction_dto.to_account_number
@@ -81,6 +84,7 @@ class StorageImplementation(StorageInterface):
             make_transaction_response_dto.transaction_id = transaction.id
             make_transaction_response_dto.amount_paid = amount
             make_transaction_response_dto.message = 'SUCCESS'
+            return make_transaction_response_dto
         if transaction_type == 'CREDIT':
             Account.objects.filter(pk=from_account_number).update(
                 balance=self.get_accountant_balance(account_id=from_account_number) + amount)
@@ -95,7 +99,7 @@ class StorageImplementation(StorageInterface):
             make_transaction_response_dto.transaction_id = transaction.id
             make_transaction_response_dto.amount_paid = amount
             make_transaction_response_dto.message = 'SUCCESS'
-        return make_transaction_response_dto
+            return make_transaction_response_dto
 
     def validate_amount(self, amount: int) -> None:
         if amount <= 0:
@@ -109,8 +113,9 @@ class StorageImplementation(StorageInterface):
         offset = query_params_dto.offset
         type = query_params_dto.type
         sort_by = query_params_dto.sort_by
+        filter_field = from_acc if type == 'DEBIT' else to_acc
         order_by = '-date_time' if sort_by == 'DESC' else 'date_time'
-        transaction_history = Transaction.objects.filter(from_acc | to_acc).filter(type=type).order_by(order_by)[
+        transaction_history = Transaction.objects.filter(filter_field).filter(type=type).order_by(order_by)[
                               offset:offset + limit]
         transactions = []
         for transaction in transaction_history:
@@ -118,8 +123,8 @@ class StorageImplementation(StorageInterface):
                 transaction_id=transaction.id,
                 transaction_type=transaction.type,
                 amount=transaction.amount,
-                date_time=transaction.date_time.strftime("%d-%m-%Y %H:%M:%S"),
-                to_account_id=transaction.type == transaction.to_account_id_id if transaction.type == 'DEBIT' else transaction.from_account_id_id
+                date_time=transaction.date_time,
+                account_id=transaction.to_account_id_id if transaction.type == 'DEBIT' else transaction.from_account_id_id
             )
             transactions.append(trns)
         transaction_dto_response = TransactionHistoryResponseDTO(

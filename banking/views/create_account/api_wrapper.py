@@ -6,7 +6,7 @@ from django_swagger_utils.drf_server.utils.decorator.interface_decorator \
 from .validator_class import ValidatorClass
 from banking.storages.storage_implementation import StorageImplementation
 from banking.presenters.presenter_implementation import PresenterImplementation
-from banking.interactors.create_account_interactor import CreateBankInteractor
+from banking.interactors.create_account_interactor import CreateAccountInteractor
 from banking.interactors.dtos import CreateAccountRequestDTO
 
 
@@ -29,7 +29,7 @@ def api_wrapper(*args, **kwargs):
 
     storage = StorageImplementation()
     presenter = PresenterImplementation()
-    interactor = CreateBankInteractor(storage=storage)
+    interactor = CreateAccountInteractor(storage=storage)
 
     response = interactor.create_account_wrapper(create_account_request_dto=create_account_request_dto,
                                                  presenter=presenter)

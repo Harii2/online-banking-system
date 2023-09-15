@@ -4,7 +4,7 @@ from banking.interactors.dtos import SelfTransactionRequestDTO
 from banking.exceptions.custom_exceptions import *
 
 
-class AccountMakeTransaction:
+class AccountMakeTransactionInteractor:
     def __init__(self, storage: StorageInterface):
         self.storage = storage
 

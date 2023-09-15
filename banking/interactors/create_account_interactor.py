@@ -4,7 +4,7 @@ from banking.interactors.storage_interfaces.storage_interface import StorageInte
 from banking.presenters.presenter_implementation import PresenterImplementation
 
 
-class CreateBankInteractor:
+class CreateAccountInteractor:
 
     def __init__(self, storage: StorageInterface):
         self.storage = storage

@@ -3,7 +3,7 @@ from django_swagger_utils.drf_server.utils.decorator.interface_decorator \
 from .validator_class import ValidatorClass
 from banking.storages.storage_implementation import StorageImplementation
 from banking.presenters.presenter_implementation import PresenterImplementation
-from banking.interactors.account_make_transaction import AccountMakeTransaction
+from banking.interactors.account_make_transaction import AccountMakeTransactionInteractor
 from banking.interactors.dtos import SelfTransactionRequestDTO
 
 
@@ -13,7 +13,7 @@ def api_wrapper(*args, **kwargs):
     request_body = kwargs['request_data']
     storage = StorageImplementation()
     presenter = PresenterImplementation()
-    interactor = AccountMakeTransaction(storage=storage)
+    interactor = AccountMakeTransactionInteractor(storage=storage)
     self_transaction_request_dto = SelfTransactionRequestDTO(
         account_number=request_body['account_number'],
         amount=request_body['amount'],
