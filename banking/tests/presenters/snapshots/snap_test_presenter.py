@@ -40,46 +40,6 @@ snapshots['TestPresenter.test_raise_invalid_amount INVALID_AMOUNT'] = {
     'response': 'Amount must be >=1 '
 }
 
-snapshots['TestPresenter.test_get_transaction_history_response Getting All Transaction History'] = {
-    'transactions': [
-        {
-            'account_id': 1,
-            'amount': 100,
-            'date_time': '15-09-2023 11:46:14',
-            'transaction_id': 0,
-            'transaction_type': 'DEBIT'
-        },
-        {
-            'account_id': 1,
-            'amount': 100,
-            'date_time': '15-09-2023 11:46:14',
-            'transaction_id': 1,
-            'transaction_type': 'DEBIT'
-        },
-        {
-            'account_id': 1,
-            'amount': 100,
-            'date_time': '15-09-2023 11:46:14',
-            'transaction_id': 2,
-            'transaction_type': 'DEBIT'
-        },
-        {
-            'account_id': 1,
-            'amount': 100,
-            'date_time': '15-09-2023 11:46:14',
-            'transaction_id': 3,
-            'transaction_type': 'DEBIT'
-        },
-        {
-            'account_id': 1,
-            'amount': 100,
-            'date_time': '15-09-2023 11:46:14',
-            'transaction_id': 4,
-            'transaction_type': 'DEBIT'
-        }
-    ]
-}
-
 snapshots['TestPresenter.test_raise_invalid_age INVALID_AGE'] = {
     'http_status_code': 400,
     'res_status': 'INVALID_AGE',
