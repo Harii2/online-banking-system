@@ -8,12 +8,15 @@ class StorageInterface:
     @abstractmethod
     def delete_account(self, account_id: int):
         pass
+
     @abstractmethod
     def update_account_details(self, update_account_dto: UpdateAccountRequestDTO):
         pass
+
     @abstractmethod
-    def account_make_transaction(self, self_transaction_request_dto: SelfTransactionRequestDTO) :
+    def account_make_transaction(self, self_transaction_request_dto: SelfTransactionRequestDTO):
         pass
+
     @abstractmethod
     def validate_debit_user_balance(self, account_id: int, amount: int):
         pass

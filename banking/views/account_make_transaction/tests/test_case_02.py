@@ -1,19 +1,23 @@
 """
-# Invalid Account id
+# Invalid Amount
 """
 
 from django_swagger_utils.utils.test import CustomAPITestCase
+
+from banking.tests.factories.models import AccountFactory
 from . import APP_NAME, OPERATION_NAME, REQUEST_METHOD, URL_SUFFIX
 
 REQUEST_BODY = """
-
+{
+    "account_number": 1,
+    "amount": -10,
+    "transaction_type": "string"
+}
 """
 
 TEST_CASE = {
     "request": {
-        "path_params": {
-            "account_id": "12"
-        },
+        "path_params": {},
         "query_params": {},
         "header_params": {},
         "securities": {},
@@ -22,7 +26,7 @@ TEST_CASE = {
 }
 
 
-class TestCase01GetAccountBalanceAPITestCase(CustomAPITestCase):
+class TestCase01AccountMakeTransactionAPITestCase(CustomAPITestCase):
     app_name = APP_NAME
     operation_name = OPERATION_NAME
     request_method = REQUEST_METHOD
@@ -30,6 +34,8 @@ class TestCase01GetAccountBalanceAPITestCase(CustomAPITestCase):
     test_case_dict = TEST_CASE
 
     def test_case(self):
-        self.default_test_case()  # Returns response object.
-        # Which can be used for further response object checks.
-        # Add database state checks here.
+        # Arrange
+        AccountFactory(id=1)
+
+        # Assert
+        self.default_test_case()

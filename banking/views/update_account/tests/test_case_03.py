@@ -1,18 +1,24 @@
 """
-# Invalid Account id
+# Updated Succesfully
 """
 
 from django_swagger_utils.utils.test import CustomAPITestCase
+
+from banking.models import Account
+from banking.tests.factories.models import AccountFactory
 from . import APP_NAME, OPERATION_NAME, REQUEST_METHOD, URL_SUFFIX
 
 REQUEST_BODY = """
-
+{
+    "name": "Hari",
+    "age": 21
+}
 """
 
 TEST_CASE = {
     "request": {
         "path_params": {
-            "account_id": "12"
+            "account_id": "1"
         },
         "query_params": {},
         "header_params": {},
@@ -22,7 +28,7 @@ TEST_CASE = {
 }
 
 
-class TestCase01GetAccountBalanceAPITestCase(CustomAPITestCase):
+class TestCase01UpdateAccountAPITestCase(CustomAPITestCase):
     app_name = APP_NAME
     operation_name = OPERATION_NAME
     request_method = REQUEST_METHOD
@@ -30,6 +36,11 @@ class TestCase01GetAccountBalanceAPITestCase(CustomAPITestCase):
     test_case_dict = TEST_CASE
 
     def test_case(self):
-        self.default_test_case()  # Returns response object.
-        # Which can be used for further response object checks.
-        # Add database state checks here.
+        # Arrange
+        AccountFactory(id=1, name='Ram', age=20)
+
+        # Assert
+        self.default_test_case()
+        account = Account.objects.get(id=1)
+        assert account.name == 'Hari'
+        assert account.age == 21

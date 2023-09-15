@@ -3,6 +3,9 @@
 """
 
 from django_swagger_utils.utils.test import CustomAPITestCase
+
+from banking.models import Account
+from banking.tests.factories.models import AccountFactory
 from . import APP_NAME, OPERATION_NAME, REQUEST_METHOD, URL_SUFFIX
 
 REQUEST_BODY = """
@@ -12,7 +15,7 @@ REQUEST_BODY = """
 TEST_CASE = {
     "request": {
         "path_params": {
-            "account_id": "12"
+            "account_id": "1"
         },
         "query_params": {},
         "header_params": {},
@@ -30,6 +33,11 @@ class TestCase01GetAccountBalanceAPITestCase(CustomAPITestCase):
     test_case_dict = TEST_CASE
 
     def test_case(self):
-        self.default_test_case()  # Returns response object.
-        # Which can be used for further response object checks.
-        # Add database state checks here.
+        # Act
+        AccountFactory(id=1, balance=1000)
+
+        # Assert
+        self.default_test_case()
+        account = Account.objects.get(id=1)
+        assert account.balance == 1000
+

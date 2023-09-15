@@ -1,8 +1,11 @@
 """
-# Invalid Account id
+# retreieving all trasactions for debit type
 """
 
 from django_swagger_utils.utils.test import CustomAPITestCase
+
+from banking.models import Account, Transaction
+from banking.tests.factories.models import TransactionFactory
 from . import APP_NAME, OPERATION_NAME, REQUEST_METHOD, URL_SUFFIX
 
 REQUEST_BODY = """
@@ -12,11 +15,11 @@ REQUEST_BODY = """
 TEST_CASE = {
     "request": {
         "path_params": {
-            "account_id": "1234"
+            "account_id": "2"
         },
         "query_params": {
-            "limit": 566,
-            "offset": 929,
+            "limit": 10,
+            "offset": 0,
             "sort_by": "ASC",
             "type": "credit"
         },
@@ -35,6 +38,14 @@ class TestCase01GetAllTransactionsAPITestCase(CustomAPITestCase):
     test_case_dict = TEST_CASE
 
     def test_case(self):
-        self.default_test_case()  # Returns response object.
-        # Which can be used for further response object checks.
-        # Add database state checks here.
+        # Act
+        TransactionFactory(type='CREDIT')
+
+        # Assert
+        self.default_test_case()
+        transaction = Transaction.objects.get(id=1)
+        acc1 = Account.objects.get(id=1)
+        acc2 = Account.objects.get(id=2)
+        assert transaction.from_account_id_id == acc1.id
+        assert transaction.to_account_id_id == acc2.id
+

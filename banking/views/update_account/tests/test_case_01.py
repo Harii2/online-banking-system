@@ -1,12 +1,15 @@
 """
-# TODO: Update test case description
+# Invalid account id
 """
 
 from django_swagger_utils.utils.test import CustomAPITestCase
 from . import APP_NAME, OPERATION_NAME, REQUEST_METHOD, URL_SUFFIX
 
 REQUEST_BODY = """
-
+{
+    "name": "string",
+    "age": 1
+}
 """
 
 TEST_CASE = {
@@ -30,6 +33,4 @@ class TestCase01UpdateAccountAPITestCase(CustomAPITestCase):
     test_case_dict = TEST_CASE
 
     def test_case(self):
-        self.default_test_case()  # Returns response object.
-        # Which can be used for further response object checks.
-        # Add database state checks here.
+        self.default_test_case()

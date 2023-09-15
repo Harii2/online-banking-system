@@ -8,8 +8,10 @@ URL_SUFFIX = "account/{account_id}/v1/"
 
 
 from .test_case_01 import TestCase01GetAccountBalanceAPITestCase
+from .test_case_02 import TestCase02GetAccountBalanceAPITestCase
 
 __all__ = [
-    "TestCase01GetAccountBalanceAPITestCase"
+    "TestCase01GetAccountBalanceAPITestCase",
+    "TestCase02GetAccountBalanceAPITestCase"
 ]
 

@@ -91,7 +91,7 @@ class PresenterImplementation(PresenterInterface, HTTPResponseMixin):
         }
         return self.prepare_400_bad_request_response(response_dict=response_dict)
 
-    def get_account_balance_response(self, balance: int) :
+    def get_account_balance_response(self, balance: int):
         balance_dict = {'balance': balance}
         return self.prepare_200_success_response(response_dict=balance_dict)
 
