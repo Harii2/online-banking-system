@@ -20,26 +20,3 @@ snapshots['TestCase03GetAllTransactionsAPITestCase::test_case body'] = {
         }
     ]
 }
-
-snapshots['TestCase03GetAllTransactionsAPITestCase::test_case header_params'] = {
-    'content-language': [
-        'Content-Language',
-        'en'
-    ],
-    'content-length': [
-        '131',
-        'Content-Length'
-    ],
-    'content-type': [
-        'Content-Type',
-        'application/json'
-    ],
-    'vary': [
-        'Accept-Language, Origin',
-        'Vary'
-    ],
-    'x-frame-options': [
-        'DENY',
-        'X-Frame-Options'
-    ]
-}
