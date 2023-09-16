@@ -7,15 +7,15 @@ from snapshottest import Snapshot
 
 snapshots = Snapshot()
 
-snapshots['TestCase01MakeTransactionAPITestCase::test_case status'] = 400
+snapshots['TestCase04MakeTransactionAPITestCase::test_case status'] = 400
 
-snapshots['TestCase01MakeTransactionAPITestCase::test_case body'] = {
+snapshots['TestCase04MakeTransactionAPITestCase::test_case body'] = {
     'http_status_code': 400,
     'res_status': 'INSUFFICIENT_BALANCE',
     'response': 'InSufficient Funds in debit account'
 }
 
-snapshots['TestCase01MakeTransactionAPITestCase::test_case header_params'] = {
+snapshots['TestCase04MakeTransactionAPITestCase::test_case header_params'] = {
     'content-language': [
         'Content-Language',
         'en'

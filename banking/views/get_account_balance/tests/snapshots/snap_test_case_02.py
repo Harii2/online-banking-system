@@ -7,13 +7,13 @@ from snapshottest import Snapshot
 
 snapshots = Snapshot()
 
-snapshots['TestCase01GetAccountBalanceAPITestCase::test_case status'] = 200
+snapshots['TestCase02GetAccountBalanceAPITestCase::test_case status'] = 200
 
-snapshots['TestCase01GetAccountBalanceAPITestCase::test_case body'] = {
+snapshots['TestCase02GetAccountBalanceAPITestCase::test_case body'] = {
     'balance': '1000'
 }
 
-snapshots['TestCase01GetAccountBalanceAPITestCase::test_case header_params'] = {
+snapshots['TestCase02GetAccountBalanceAPITestCase::test_case header_params'] = {
     'content-language': [
         'Content-Language',
         'en'

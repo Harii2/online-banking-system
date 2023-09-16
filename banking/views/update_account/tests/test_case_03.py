@@ -28,7 +28,7 @@ TEST_CASE = {
 }
 
 
-class TestCase01UpdateAccountAPITestCase(CustomAPITestCase):
+class TestCase03UpdateAccountAPITestCase(CustomAPITestCase):
     app_name = APP_NAME
     operation_name = OPERATION_NAME
     request_method = REQUEST_METHOD

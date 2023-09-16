@@ -7,13 +7,13 @@ from snapshottest import Snapshot
 
 snapshots = Snapshot()
 
-snapshots['TestCase01DeleteAccountAPITestCase::test_case status'] = 200
+snapshots['TestCase02DeleteAccountAPITestCase::test_case status'] = 200
 
-snapshots['TestCase01DeleteAccountAPITestCase::test_case body'] = {
+snapshots['TestCase02DeleteAccountAPITestCase::test_case body'] = {
     'message': 'Deleted Succesfully'
 }
 
-snapshots['TestCase01DeleteAccountAPITestCase::test_case header_params'] = {
+snapshots['TestCase02DeleteAccountAPITestCase::test_case header_params'] = {
     'content-language': [
         'Content-Language',
         'en'

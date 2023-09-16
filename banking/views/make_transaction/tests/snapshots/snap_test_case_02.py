@@ -7,15 +7,15 @@ from snapshottest import Snapshot
 
 snapshots = Snapshot()
 
-snapshots['TestCase01MakeTransactionAPITestCase::test_case status'] = 400
+snapshots['TestCase02MakeTransactionAPITestCase::test_case status'] = 400
 
-snapshots['TestCase01MakeTransactionAPITestCase::test_case body'] = {
+snapshots['TestCase02MakeTransactionAPITestCase::test_case body'] = {
     'http_status_code': 400,
     'res_status': 'INVALID_ACCOUNT_ID',
     'response': 'User not exists with that account id'
 }
 
-snapshots['TestCase01MakeTransactionAPITestCase::test_case header_params'] = {
+snapshots['TestCase02MakeTransactionAPITestCase::test_case header_params'] = {
     'content-language': [
         'Content-Language',
         'en'

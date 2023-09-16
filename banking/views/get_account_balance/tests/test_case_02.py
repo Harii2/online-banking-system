@@ -25,7 +25,7 @@ TEST_CASE = {
 }
 
 
-class TestCase01GetAccountBalanceAPITestCase(CustomAPITestCase):
+class TestCase02GetAccountBalanceAPITestCase(CustomAPITestCase):
     app_name = APP_NAME
     operation_name = OPERATION_NAME
     request_method = REQUEST_METHOD

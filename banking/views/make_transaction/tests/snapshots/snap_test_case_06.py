@@ -7,15 +7,15 @@ from snapshottest import Snapshot
 
 snapshots = Snapshot()
 
-snapshots['TestCase01MakeTransactionAPITestCase::test_case status'] = 201
+snapshots['TestCase06MakeTransactionAPITestCase::test_case status'] = 201
 
-snapshots['TestCase01MakeTransactionAPITestCase::test_case body'] = {
+snapshots['TestCase06MakeTransactionAPITestCase::test_case body'] = {
     'amount_paid': 1000,
     'message': 'SUCCESS',
     'transaction_id': 1
 }
 
-snapshots['TestCase01MakeTransactionAPITestCase::test_case header_params'] = {
+snapshots['TestCase06MakeTransactionAPITestCase::test_case header_params'] = {
     'content-language': [
         'Content-Language',
         'en'

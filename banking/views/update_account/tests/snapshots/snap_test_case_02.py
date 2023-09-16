@@ -7,13 +7,13 @@ from snapshottest import Snapshot
 
 snapshots = Snapshot()
 
-snapshots['TestCase01UpdateAccountAPITestCase::test_case status'] = 400
+snapshots['TestCase02UpdateAccountAPITestCase::test_case status'] = 400
 
-snapshots['TestCase01UpdateAccountAPITestCase::test_case body'] = {
+snapshots['TestCase02UpdateAccountAPITestCase::test_case body'] = {
     'res_status': 'INVALID_AGE'
 }
 
-snapshots['TestCase01UpdateAccountAPITestCase::test_case header_params'] = {
+snapshots['TestCase02UpdateAccountAPITestCase::test_case header_params'] = {
     'content-language': [
         'Content-Language',
         'en'

@@ -25,7 +25,7 @@ TEST_CASE = {
 }
 
 
-class TestCase01DeleteAccountAPITestCase(CustomAPITestCase):
+class TestCase02DeleteAccountAPITestCase(CustomAPITestCase):
     app_name = APP_NAME
     operation_name = OPERATION_NAME
     request_method = REQUEST_METHOD
